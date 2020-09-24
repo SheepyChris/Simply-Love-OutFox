@@ -35,7 +35,7 @@ If you're using **SM5.0.12**, Simply Love should be installed here:
 </tbody>
 </table>
 
-Or, if you're using **SM5.1-beta**:
+If you're using **SM5.1-beta**:
 
 <table>
 <tbody>
@@ -54,6 +54,24 @@ Or, if you're using **SM5.1-beta**:
 </tbody>
 </table>
 
+Or, if you're using **Project OutFox 5.3**:
+<table>
+<tbody>
+  <tr>
+    <td>Windows 10, Windows 7</td>
+    <td>C:\Games\StepMania 5.3 OutFox\Appearance\Themes\Simply Love (default installation path)</td>
+  </tr>
+  <tr>
+    <td>macOS</td>
+    <td>/Users/<code>USERNAME</code>/Library/Application Support/StepMania 5.3 OutFox/Appearance/Themes/Simply Love/</td>
+  </tr>
+  <tr>
+    <td>Linux</td>
+    <td>/home/<code>USERNAME</code>/.stepmania-5.3/Themes/Simply Love/</td>
+  </tr>
+</tbody>
+</table>
+
 🔷 Tip: If you find yourself adding/modifying themes frequently, you may wish to create a shortcut as the user content folder can be inconvenient to navigate to.
 
 ## 4. Switch to Simply Love
@@ -63,6 +81,8 @@ The next time you use StepMania, you can switch to Simply Love from the main opt
 ![switch to Simply Love](https://i.imgur.com/RoBLgZnh.png)
 
 The exact process can vary depending on your current theme, but this setting is usually in **Options → Display Options → Appearance Options → Theme**
+
+In case of Project OutFox 5.3 with the default Soundwaves theme, this setting is in **Options → User Experience  → Appearance Options → Theme**
 
 ---
 
