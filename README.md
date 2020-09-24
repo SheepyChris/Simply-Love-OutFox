@@ -1,11 +1,11 @@
-# Simply Love (StepMania 5)
+# Simply Love (StepMania 5.x)
 
 ![Arrow Logo](https://i.imgur.com/oZmxyGo.png)
 
 
 ## About
 
-Simply Love is a StepMania 5 theme for the post-ITG community.
+Simply Love is a StepMania 5.x theme for the post-ITG community.
 
 It features a clean and simple design, offers numerous data-driven features not implemented by the StepMania 5 engine, and allows the current generation of ITG fans to breathe new life into the game they've known for over a decade.
 
@@ -20,12 +20,12 @@ Simply Love is compatible with current releases from the official StepMania proj
 **Compatible Releases**<br>
 ✅ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)<br>
 ✅ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)<br>
+✅ [Project OutFox 5.3 Alpha 4.8.5 or newer](https://projectmoon.dance/downloads)<br>
 
 If you are able to compile StepMania's source code yourself, the [5_1-new branch](https://github.com/stepmania/stepmania/tree/5_1-new/) is supported.  The wiki has [instructions for compiling](https://github.com/stepmania/stepmania/wiki/Compiling-StepMania).
 
 
 **Incompatible**<br>
-❌ Alpha builds of SM5.3 are not supported at this time, but hopefully this will change in the future<br>
 ❌ Forks of SM5 (e.g. *starworlds*)<br>
 ❌ Older versions of StepMania (e.g. StepMania 3.9)<br>
 ❌ Forks of older versions of StepMania (e.g. OpenITG, NotITG)<br>
@@ -36,7 +36,7 @@ If you are able to compile StepMania's source code yourself, the [5_1-new branch
 
 If you are upgrading from a previous version of Simply Love, fully delete the old Simply Love folder first.  **Do not merge the new folder into the old.**
 
-You can download the current Simply Love release at the [Latest Release](https://github.com/quietly-turning/Simply-Love-SM5/releases/latest) page.
+For this specific fork, it is recommended to download from Code > Download ZIP button in the release branch. This is where OutFox commits will be available.
 
 Full install instructions are in the [Installing Simply Love](./Other/Documentation/InstallingSimplyLove-README.md) README.
 
