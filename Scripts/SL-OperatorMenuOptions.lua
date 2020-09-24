@@ -166,12 +166,19 @@ OperatorMenuOptionRows.VideoRenderer = function()
 	local choices = { "opengl" }
 	local values  = { "opengl" }
 
-	-- Windows also has d3d as a VideoRenderer, and the convention(?)
-	-- there is to list both in Preferences.ini, but only use the first
-	local architecture = HOOKS:GetArchName():lower()
-	if architecture:match("windows") then
-		table.insert(choices, "d3d")
-		values = { "opengl,d3d", "d3d,opengl" }
+	-- 5.3 has removed d3d due to multiple issues deriving from the old
+	-- implementation, so instead there is a new cross-platform renderer
+	if (StepManiaSubVersionNumber() == 3) then
+		table.insert(choices, "glad")
+		values = { "opengl,glad", "glad,opengl" }
+	else
+		-- Windows also has d3d as a VideoRenderer, and the convention(?)
+		-- there is to list both in Preferences.ini, but only use the first
+		local architecture = HOOKS:GetArchName():lower()
+		if architecture:match("windows") then
+			table.insert(choices, "d3d")
+			values = { "opengl,d3d", "d3d,opengl" }
+		end
 	end
 
 	return {
