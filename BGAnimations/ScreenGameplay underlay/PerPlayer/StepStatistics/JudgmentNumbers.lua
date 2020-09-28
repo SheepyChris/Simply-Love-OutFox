@@ -40,7 +40,8 @@ for index, window in ipairs(TapNoteScores) do
 		InitCommand=function(self)
 			self:zoom(0.5):horizalign(left)
 
-			if SL.Global.ActiveModifiers.TimingWindows[index] or index==#TapNoteScores then
+			if (SL.Global.ActiveModifiers.TimingWindows[index] or index==#TapNoteScores) and not
+				(SL.Global.GameMode == "StomperZ" and index == 5) then
 				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][index] )
 				leadingZeroAttr = { Length=(digits-1), Diffuse=Brightness(self:GetDiffuse(), 0.35) }
 				self:AddAttribute(0, leadingZeroAttr )

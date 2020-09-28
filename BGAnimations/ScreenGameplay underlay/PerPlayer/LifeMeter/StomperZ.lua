@@ -41,7 +41,7 @@ local af = Def.ActorFrame{
 		Def.Quad{
 			Name="Left",
 			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
+				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,0)
 					:diffuseupperleft(color("#00c263")):diffuselowerleft(color("#00c263"))
 			end,
 			ChangeSizeCommand=function(self, params)
@@ -51,7 +51,7 @@ local af = Def.ActorFrame{
 		Def.Quad{
 			Name="Right",
 			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
+				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,0)
 					:diffuseupperright(color("#00c263")):diffuselowerright(color("#00c263"))
 			end,
 			ChangeSizeCommand=function(self, params)
@@ -67,7 +67,7 @@ local af = Def.ActorFrame{
 		Def.Quad{
 			Name="Left",
 			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
+				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,0)
 					:diffuseupperleft(color("#0073ff")):diffuselowerleft(color("#0073ff"))
 			end,
 			ChangeSizeCommand=function(self, params)
@@ -77,7 +77,7 @@ local af = Def.ActorFrame{
 		Def.Quad{
 			Name="Right",
 			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
+				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,0)
 					:diffuseupperright(color("#0073ff")):diffuselowerright(color("#0073ff"))
 			end,
 			ChangeSizeCommand=function(self, params)
@@ -92,35 +92,37 @@ local af = Def.ActorFrame{
 		Def.Quad{
 			Name="Left",
 			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
+				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,0)
 					:diffuseupperleft(color("#6517e0")):diffuselowerleft(color("#6517e0"))
 			end,
 			HotCommand=function(self, params)
-				self:decelerate(1):diffusealpha(1)
+				self:decelerate(1):diffusealpha(1):diffuserightedge(0,0,0,0)
 			end,
 			NotHotCommand=function(self)
 				self:diffusealpha(0)
 			end,
 			DeadCommand=function(self)
-				self:diffuseupperleft(1,0,0,0):diffuselowerleft(1,0,0,0)
-					:accelerate(0.2):diffusealpha(1):decelerate(0.4):diffusealpha(0)
+				self:accelerate(0.2):diffusealpha(1)
+					:diffuseupperleft(1,0,0,0):diffuselowerleft(1,0,0,0)
+					:decelerate(0.4):diffusealpha(0)
 			end
 		},
 		Def.Quad{
 			Name="Right",
 			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
+				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,0)
 					:diffuseupperright(color("#6517e0")):diffuselowerright(color("#6517e0"))
 			end,
 			HotCommand=function(self, params)
-				self:decelerate(1):diffusealpha(1)
+				self:decelerate(1):diffusealpha(1):diffuseleftedge(0,0,0,0)
 			end,
 			NotHotCommand=function(self)
 				self:diffusealpha(0)
 			end,
 			DeadCommand=function(self)
-				self:diffuseupperright(1,0,0,0):diffuselowerright(1,0,0,0)
-					:accelerate(0.2):diffusealpha(1):decelerate(0.4):diffusealpha(0)
+				self:accelerate(0.2):diffusealpha(1)
+					:diffuseupperright(1,0,0,0):diffuselowerright(1,0,0,0)
+					:decelerate(0.4):diffusealpha(0)
 			end
 		}
 	},
