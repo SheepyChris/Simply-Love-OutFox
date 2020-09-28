@@ -869,7 +869,7 @@ local Update = function(self, delta)
 			end
 		end
 
-		local items = {"IconChoiceCasual","IconChoiceITG","IconChoiceFA+"}
+		local items = {"IconChoiceCasual","IconChoiceITG","IconChoiceFA+","IconChoiceStomperZ"}
 		if SCREENMAN:GetTopScreen():GetName() == "ScreenSelectPlayMode2" then
 			items = {"IconChoiceRegular","IconChoiceMarathon"}
 		end
@@ -910,7 +910,7 @@ local Update = function(self, delta)
 
 		--SM( underlay:GetChildren() )
 
-		local items2 = {SCREENMAN:GetTopScreen():GetChild("LifeMeter"),SCREENMAN:GetTopScreen():GetChild("Cursor")}
+		local items2 = {SCREENMAN:GetTopScreen():GetChild("LifeMeter"),SCREENMAN:GetTopScreen():GetChild("Cursor"),SCREENMAN:GetTopScreen():GetChild("StomperZLifeMeter")}
 
 		table.insert(items2,underlay:GetChild("")[7]) -- 77.41
 

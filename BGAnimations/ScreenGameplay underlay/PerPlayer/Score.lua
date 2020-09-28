@@ -10,6 +10,7 @@ local NumPlayers = #GAMESTATE:GetHumanPlayers()
 if mods.HideScore then return end
 
 if NumPlayers > 1
+and SL.Global.GameMode ~= "StomperZ"
 and mods.NPSGraphAtTop
 and not IsUltraWide
 then
@@ -68,8 +69,15 @@ return LoadFont("Wendy/_wendy monospace numbers")..{
 	BeginCommand=function(self)
 		-- assume "normal" score positioning first, but there are many reasons it will need to be moved
 		self:xy( pos[player].x, pos[player].y )
-
-		if mods.NPSGraphAtTop and styletype ~= "OnePlayerTwoSides" then
+		
+		-- FIXME: use the "padding" method adopted after StomperZ was removed from mainline
+		if SL.Global.GameMode == "StomperZ" then
+			self:zoom(0.4):x( WideScale(160, 214) ):y(20)
+			if player == PLAYER_2 then
+				self:x( _screen.w - WideScale(50, 104) )
+			end
+		
+		elseif mods.NPSGraphAtTop and styletype ~= "OnePlayerTwoSides" then
 			-- if NPSGraphAtTop and Step Statistics and not double,
 			-- move the score down into the stepstats pane under
 			-- the jugdgment breakdown

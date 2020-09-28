@@ -22,6 +22,19 @@ return Def.ActorFrame{
 			self:zoomto(GraphWidth, GraphHeight):diffuse(color("#101519")):vertalign(top)
 		end
 	},
+	
+	-- the halfway mark for lifebar; only visible in StomperZ
+	Def.Quad{
+		Name="LifeBarGraph_MidwayQuad",
+		InitCommand=function(self)
+			if SL.Global.GameMode ~= "StomperZ" then
+				self:visible(false)
+				return
+			end
+			self:diffuse(0,0,0,0.75):y(GraphHeight):vertalign(bottom)
+				:zoomto( GraphWidth, GraphHeight/2 )
+		end
+	},
 
 	LoadActor("./ScatterPlot.lua", {player=player, GraphWidth=GraphWidth, GraphHeight=GraphHeight} ),
 

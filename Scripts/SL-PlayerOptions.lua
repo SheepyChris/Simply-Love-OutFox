@@ -432,6 +432,7 @@ local Overrides = {
 		Values = function()
 			-- GameplayExtras will be presented as a single OptionRow when WideScreen
 			local vals = { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "MissBecauseHeld", "NPSGraphAtTop" }
+			if SL.Global.GameMode == "StomperZ" then table.remove(vals, 5) end
 
 			-- if not WideScreen (traditional DDR cabinets running at 640x480)
 			-- remove the last two choices and show an additional OptionRow with just those two
@@ -504,6 +505,10 @@ local Overrides = {
 				end
 			end
 		end
+	},
+	-------------------------------------------------------------------------
+	ReceptorArrowsPosition = {
+		Choices = { "StomperZ", "ITG" },
 	},
 	-------------------------------------------------------------------------
 	LifeMeterType = {

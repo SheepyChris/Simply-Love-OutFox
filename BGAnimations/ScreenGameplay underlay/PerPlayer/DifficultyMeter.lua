@@ -5,8 +5,11 @@ local _x = _screen.cx + (player==PLAYER_1 and -1 or 1) * SL_WideScale(292.5, 342
 return Def.ActorFrame{
 	InitCommand=function(self)
 		self:xy(_x, 56)
+		
+		if SL.Global.GameMode == "StomperZ" then
+			self:y( 20 )
+		end
 	end,
-
 
 	-- colored background for player's chart's difficulty meter
 	Def.Quad{

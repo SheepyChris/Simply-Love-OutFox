@@ -3,6 +3,7 @@ local pn = ToEnumShortString(player)
 
 if not SL[pn].ActiveModifiers.NPSGraphAtTop
 or SL.Global.GameMode == "Casual"
+or SL.Global.GameMode == "StomperZ"
 then
 	return
 end
