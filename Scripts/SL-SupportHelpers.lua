@@ -74,7 +74,7 @@ StepManiaVersionIsSupported = function()
 	-- SM5.1.x is supported
 	-- SM5.2 is not supported because it saw significant backwards-incompatible API changes and is now abandoned
 	-- SM5.3 is unofficially supported :)
-	if not (t[2] and (t[2]==0 or t[2]==1 or t[2]==3)) then return false end
+	-- if not (t[2] and (t[2]==0 or t[2]==1 or t[2]==3)) then return false end
 
 	-- if we're in SM5.0.x, then check for a third segment
 	if t[2]==0 then
