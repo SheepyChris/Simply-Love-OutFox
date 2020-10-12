@@ -1,5 +1,5 @@
 -- This script needs to be loaded before other scripts that use it.
-
+LoadModule("Row.Prefs.lua")(LoadModule("Options.Prefs.lua"))
 local PlayerDefaults = {
 	__index = {
 		initialize = function(self)

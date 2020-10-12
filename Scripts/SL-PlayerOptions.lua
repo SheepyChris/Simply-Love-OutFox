@@ -170,20 +170,20 @@ local Overrides = {
 		end
 	},
 	-------------------------------------------------------------------------
-	JudgmentGraphic = {
-		LayoutType = "ShowOneInRow",
-		ExportOnChange = true,
-		Choices = function() return map(StripSpriteHints, GetJudgmentGraphics(SL.Global.GameMode)) end,
-		Values = function() return GetJudgmentGraphics(SL.Global.GameMode) end,
-		SaveSelections = function(self, list, pn)
-			local mods = SL[ToEnumShortString(pn)].ActiveModifiers
-			for i, val in ipairs(self.Values) do
-				if list[i] then mods.JudgmentGraphic = val; break end
-			end
-			-- Broadcast a message that ./Graphics/OptionRow Frame.lua will be listening for so it can change the Judgment preview
-			MESSAGEMAN:Broadcast("JudgmentGraphicChanged", {Player=pn, JudgmentGraphic=StripSpriteHints(mods.JudgmentGraphic)})
-		end
-	},
+	-- JudgmentGraphic = {
+	-- 	LayoutType = "ShowOneInRow",
+	-- 	ExportOnChange = true,
+	-- 	Choices = function() return map(StripSpriteHints, GetJudgmentGraphics(SL.Global.GameMode)) end,
+	-- 	Values = function() return GetJudgmentGraphics(SL.Global.GameMode) end,
+	-- 	SaveSelections = function(self, list, pn)
+	-- 		local mods = SL[ToEnumShortString(pn)].ActiveModifiers
+	-- 		for i, val in ipairs(self.Values) do
+	-- 			if list[i] then mods.JudgmentGraphic = val; break end
+	-- 		end
+	-- 		-- Broadcast a message that ./Graphics/OptionRow Frame.lua will be listening for so it can change the Judgment preview
+	-- 		MESSAGEMAN:Broadcast("JudgmentGraphicChanged", {Player=pn, JudgmentGraphic=StripSpriteHints(mods.JudgmentGraphic)})
+	-- 	end
+	-- },
 	-------------------------------------------------------------------------
 	HoldJudgment = {
 		LayoutType = "ShowOneInRow",

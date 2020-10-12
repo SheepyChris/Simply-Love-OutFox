@@ -93,7 +93,7 @@ end
 -- "ITG" or "FA+"; aligned to right of screen
 af[#af+1] = LoadFont("Common Header")..{
 	Name="GameModeText",
-	Text=THEME:GetString("ScreenSelectPlayMode", SL.Global.GameMode),
+	Text=LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini"),
 	InitCommand=function(self)
 		self:diffusealpha(0):halign(1):y(15)
 		self:zoom( SL_WideScale(0.5, 0.6) )

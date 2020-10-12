@@ -25,7 +25,7 @@ local track_missbcheld = SL[ToEnumShortString(player)].ActiveModifiers.MissBecau
 
 local judgments = {}
 for i=1,GAMESTATE:GetCurrentStyle():ColumnsPerPlayer() do
-	judgments[#judgments+1] = { W1=0, W2=0, W3=0, W4=0, W5=0, Miss=0 }
+	judgments[#judgments+1] = { ProW1=0, ProW2=0, ProW3=0, ProW4=0, ProW5=0, W1=0, W2=0, W3=0, W4=0, W5=0, Miss=0 }
 end
 
 local actor = Def.Actor{
