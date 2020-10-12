@@ -86,7 +86,7 @@ local Overrides = {
 
 	-------------------------------------------------------------------------
 	SpeedModType = {
-		Choices = { "X", "C", "M" },
+		Choices = { "X", "C", "M", "A" },
 		ExportOnChange = true,
 		LayoutType = "ShowOneInRow",
 		SaveSelections = function(self, list, pn)
