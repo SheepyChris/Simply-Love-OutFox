@@ -1,7 +1,23 @@
 local Players = GAMESTATE:GetHumanPlayers()
 local NumPanes = SL.Global.GameMode=="Casual" and 1 or 6
 
-local t = Def.ActorFrame{}
+local t = Def.ActorFrame{
+	-- Update discord information when arriving at this screen.
+	InitCommand = function(self)
+		local player = GAMESTATE:GetMasterPlayerNumber()
+		local SongOrCourse = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
+		local StepOrTrails = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
+		if GAMESTATE:GetCurrentSong() then
+			local details = GAMESTATE:IsCourseMode() and SongOrCourse:GetTranslitFullTitle() or (PREFSMAN:GetPreference("ShowNativeLanguage") and SongOrCourse:GetDisplayMainTitle() or SongOrCourse:GetTranslitFullTitle()) .. " - " .. GAMESTATE:GetCurrentSong():GetGroupName()
+			details = string.len(details) < 128 and details or string.sub(details, 1, 124) .. "..."
+			local Difficulty = ToEnumShortString( StepOrTrails:GetDifficulty() ) .. " " .. StepOrTrails:GetMeter()
+			local Percentage = STATSMAN:GetCurStageStats():GetPlayerStageStats(player):GetPercentDancePoints()
+			local states = Difficulty .. " (".. string.format( "%.2f%%", Percentage*100) .. ")"
+			GAMESTATE:UpdateDiscordProfile(GAMESTATE:GetPlayerDisplayName(player))
+			GAMESTATE:UpdateDiscordScreenInfo(details,states,1)
+		end
+	end
+}
 
 if SL.Global.GameMode ~= "Casual" then
 	-- add a lua-based InputCalllback to this screen so that we can navigate
