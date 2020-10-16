@@ -1,4 +1,6 @@
-local player = ...
+local arg = ...
+local player = arg[1]
+local coloring = arg[2]
 
 local IsUltraWide = (GetScreenAspectRatio() > 21/9)
 local NoteFieldIsCentered = (GetNotefieldX(player) == _screen.cx)
@@ -16,13 +18,17 @@ digits = math.max(4, digits)
 local pattern = ("%%0%dd"):format(digits)
 
 
-local TapNoteScores = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' }
-local TapNoteJudgments = { W1=0, W2=0, W3=0, W4=0, W5=0, Miss=0 }
+local TapNoteScores = { 'ProW1', 'ProW2', 'ProW3', 'ProW4', 'ProW5', 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' }
+local TapNoteJudgments = { ProW1=0, ProW2=0, ProW3=0, ProW4=0, ProW5=0, W1=0, W2=0, W3=0, W4=0, W5=0, Miss=0 }
 local RadarCategories = { 'Holds', 'Mines', 'Rolls' }
 local RadarCategoryJudgments = { Holds=0, Mines=0, Rolls=0 }
 
+local Name,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+table.sort(Name)
+Name[#Name+1] = "Miss"
+
 local leadingZeroAttr
-local row_height = 35
+local row_height = scale( #Name, 1, 11, 35, 30 )
 
 local t = Def.ActorFrame{
 	Name="JudgmentNumbers",
@@ -32,22 +38,17 @@ local t = Def.ActorFrame{
 }
 
 -- do "regular" TapNotes first
-for index, window in ipairs(TapNoteScores) do
+for index, window in ipairs(Name) do
 
 	-- player performance value
-	t[#t+1] = LoadFont("Wendy/_ScreenEvaluation numbers")..{
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
 		Text=(pattern):format(0),
 		InitCommand=function(self)
-			self:zoom(0.5):horizalign(left)
+			self:horizalign(left)
 
-			if (SL.Global.ActiveModifiers.TimingWindows[index] or index==#TapNoteScores) and not
-				(SL.Global.GameMode == "StomperZ" and index == 5) then
-				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][index] )
-				leadingZeroAttr = { Length=(digits-1), Diffuse=Brightness(self:GetDiffuse(), 0.35) }
-				self:AddAttribute(0, leadingZeroAttr )
-			else
-				self:diffuse(Brightness({1,1,1,1},0.25))
-			end
+			self:diffuse( coloring["TapNoteScore_"..window] )
+			leadingZeroAttr = { Length=(digits-1), Diffuse=Brightness(self:GetDiffuse(), 0.35) }
+			self:AddAttribute(0, leadingZeroAttr )
 		end,
 		BeginCommand=function(self)
 			self:x( 108 )
@@ -75,7 +76,7 @@ for index, window in ipairs(TapNoteScores) do
 
 				leadingZeroAttr = {
 					Length=(digits - (math.floor(math.log10(TapNoteJudgments[window]))+1)),
-					Diffuse=Brightness(SL.JudgmentColors[SL.Global.GameMode][index], 0.35)
+					Diffuse=Brightness( coloring["TapNoteScore_"..window] , 0.35)
 				}
 				self:AddAttribute(0, leadingZeroAttr )
 			end
@@ -88,9 +89,9 @@ end
 for index, RCType in ipairs(RadarCategories) do
 
 	-- player performance value
-	t[#t+1] = LoadFont("Wendy/_ScreenEvaluation numbers")..{
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
 		Text="000",
-		InitCommand=function(self) self:zoom(0.5):horizalign(right) end,
+		InitCommand=function(self) self:horizalign(right) end,
 		BeginCommand=function(self)
 			self:y((index-1)*row_height - 178)
 			self:x( -54 )
@@ -131,8 +132,8 @@ for index, RCType in ipairs(RadarCategories) do
 	}
 
 	-- possible value
-	t[#t+1] = LoadFont("Wendy/_ScreenEvaluation numbers")..{
-		InitCommand=function(self) self:zoom(0.5):horizalign(right) end,
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
+		InitCommand=function(self) self:horizalign(right) end,
 		BeginCommand=function(self)
 
 			possible = 0

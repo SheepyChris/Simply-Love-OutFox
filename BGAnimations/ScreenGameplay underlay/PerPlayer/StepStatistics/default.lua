@@ -62,6 +62,7 @@ end
 
 af[#af+1] = LoadActor("./DarkBackground.lua", {player, header_height, sidepane_width})
 
+local coloring = LoadModule("SL/SL.JudgmentColor.lua"):GetGameModeColor()
 -- banner, judgment labels, and judgment numbers will be collectively shrunk
 -- if Center1Player is enabled to accommodate the smaller space
 af[#af+1] = Def.ActorFrame{
@@ -87,8 +88,8 @@ af[#af+1] = Def.ActorFrame{
 	end,
 
 	LoadActor("./Banner.lua", player),
-	LoadActor("./JudgmentLabels.lua", player),
-	LoadActor("./JudgmentNumbers.lua", player),
+	LoadActor("./JudgmentLabels.lua", {player,coloring}),
+	LoadActor("./JudgmentNumbers.lua", {player,coloring}),
 	LoadActor("./Time.lua", player),
 }
 

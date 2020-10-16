@@ -63,14 +63,14 @@ af[#af+1] = Def.ActorFrame{
 }
 
 af[#af+1] = LoadFont("Common Bold")..{
-	Text=text,
-	InitCommand=function(self) self:Center():diffusealpha(0):shadowlength(1) end,
+	Text=ToUpper(text),
+	InitCommand=function(self) self:Center():zoom(1.5):diffusealpha(0):shadowlength(1) end,
 	OnCommand=function(self)
 		-- don't animate the text tweening to the bottom of the screen if ScreenGameplay was just reloaded by a mod chart
 		if not SL.Global.GameplayReloadCheck then
 			self:accelerate(0.5):diffusealpha(1):sleep(0.66):accelerate(0.33)
 		end
-		self:zoom(0.4):y(_screen.h-30)
+		self:zoom(0.6):y(_screen.h-30)
 
 		-- offset "stage i" text to the left or right if only one player is joined, and that player's notefield is centered
 		if #GAMESTATE:GetHumanPlayers() == 1 and GetNotefieldX( GAMESTATE:GetMasterPlayerNumber() ) == _screen.cx then

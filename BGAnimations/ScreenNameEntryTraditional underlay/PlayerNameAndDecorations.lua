@@ -61,8 +61,8 @@ t[#t+1] = LoadFont("Wendy/_wendy white")..{
 }
 
 t[#t+1] = LoadFont("Common Bold")..{
-	Text=ScreenString("OutOfRanking"),
-	OnCommand=function(self) self:zoom(0.7):diffuse(PlayerColor(Player)):y(58):visible(not CanEnterName) end
+	Text=ToUpper(ScreenString("OutOfRanking")),
+	OnCommand=function(self) self:zoom(1.4):diffuse(PlayerColor(Player)):y(58):visible(not CanEnterName) end
 }
 
 return t

@@ -50,9 +50,9 @@ local af = Def.ActorFrame{
 	end,
 
 	LoadFont("Common Bold")..{
-		Text=THEME:GetString("ScreenSelectStyle", choiceName:gsub("^%l", string.upper)),
+		Text=ToUpper(THEME:GetString("ScreenSelectStyle", choiceName:gsub("^%l", string.upper))),
 		InitCommand=function(self)
-			self:shadowlength(1):y(37):zoom(0.5)
+			self:shadowlength(1):y(37):zoom(1)
 		end,
 		GainFocusCommand=function(self) if ThemePrefs.Get("VisualTheme")=="Gay" then self:rainbowscroll(true) end end,
 		LoseFocusCommand=function(self) if ThemePrefs.Get("VisualTheme")=="Gay" then self:rainbowscroll(false) end end,

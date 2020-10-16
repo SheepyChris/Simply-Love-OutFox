@@ -245,11 +245,11 @@ af[#af+1] = LoadFont("Common Normal")..{
 
 
 -- chart difficulty meter
-af[#af+1] = LoadFont("Wendy/_wendy small")..{
+af[#af+1] = LoadFont("Wendy/_wendy white")..{
 	Name="DifficultyMeter",
 	InitCommand=function(self)
 		self:horizalign(right):diffuse(Color.Black)
-		self:xy(pos.col[4], pos.row[2])
+		self:xy(pos.col[4], pos.row[2]):zoom(1.75)
 		if not IsUsingWideScreen() then self:maxwidth(66) end
 		self:queuecommand("Set")
 	end,

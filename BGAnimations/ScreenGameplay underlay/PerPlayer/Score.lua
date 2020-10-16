@@ -50,13 +50,13 @@ local zoom_factor = clamp(scale(GetScreenAspectRatio(), 16/10, 16/9, ar_scale.si
 
 -- -----------------------------------------------------------------------
 
-return LoadFont("Wendy/_wendy monospace numbers")..{
+return LoadFont("Wendy/_wendy white")..{
 	Text="0.00",
 
 	Name=pn.."Score",
 	InitCommand=function(self)
-		self:valign(1):horizalign(right)
-		self:zoom(0.5)
+		self:horizalign(right)
+		self:zoom(1.5)
 	end,
 
 	-- FIXME: this is out of control and points to the need for a generalized approach
@@ -72,7 +72,7 @@ return LoadFont("Wendy/_wendy monospace numbers")..{
 		
 		-- FIXME: use the "padding" method adopted after StomperZ was removed from mainline
 		if SL.Global.GameMode == "StomperZ" then
-			self:zoom(0.4):x( WideScale(160, 214) ):y(20)
+			self:x( WideScale(160, 214) ):y(20)
 			if player == PLAYER_2 then
 				self:x( _screen.w - WideScale(50, 104) )
 			end

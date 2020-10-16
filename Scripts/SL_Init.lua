@@ -1,5 +1,4 @@
 -- This script needs to be loaded before other scripts that use it.
-LoadModule("Row.Prefs.lua")(LoadModule("Options.Prefs.lua"))
 local PlayerDefaults = {
 	__index = {
 		initialize = function(self)
@@ -397,3 +396,26 @@ function InitializeSimplyLove()
 end
 
 InitializeSimplyLove()
+
+TimingWindow[#TimingWindow+1] = function()
+	local Name = "StomperZ"
+	local Timings= {
+		['TapNoteScore_W1']=0.012500,
+		['TapNoteScore_W2']=0.025000,
+		['TapNoteScore_W3']=0.050000,
+		['TapNoteScore_W4']=0.100000,
+		['TapNoteScore_HitMine']=0.0900,
+		['TapNoteScore_Attack']=0.1350,
+		['TapNoteScore_Hold']=0.2500,
+		['TapNoteScore_Roll']=0.5000,
+		['TapNoteScore_Checkpoint']=0.1664,
+	};
+	return Name, Timings
+end
+
+TimingModes = {}
+for i,v in ipairs(TimingWindow) do
+	Name,_ = TimingWindow[i]()
+	table.insert(TimingModes,Name)
+end
+LoadModule("Row.Prefs.lua")(LoadModule("Options.Prefs.lua"))

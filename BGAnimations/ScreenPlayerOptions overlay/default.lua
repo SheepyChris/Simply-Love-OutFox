@@ -268,7 +268,7 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 		Text="",
 		InitCommand=function(self)
 			self:diffuse(PlayerColor(player)):diffusealpha(0)
-			self:zoom(0.5):y(48)
+			self:zoom(0.8):y(48)
 			self:x(player==PLAYER_1 and -100 or 150)
 			self:shadowlength(0.55)
 		end,

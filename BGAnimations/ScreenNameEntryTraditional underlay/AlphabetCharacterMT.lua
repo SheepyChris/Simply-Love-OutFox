@@ -19,7 +19,6 @@ local alphabet_character_mt = {
 					Font="Wendy/_wendy white",
 					InitCommand=function(subself)
 						self.bmt = subself
-						subself:zoom(0.5)
 						subself:diffuse(0.75,0.75,0.75,1)
 					end,
 					OnCommand=function(self) self:sleep(0.2):linear(0.25) end,

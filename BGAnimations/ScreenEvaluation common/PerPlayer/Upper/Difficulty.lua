@@ -45,7 +45,7 @@ return Def.ActorFrame{
 	-- numerical difficulty meter
 	LoadFont("Common Bold")..{
 		InitCommand=function(self)
-			self:diffuse(Color.Black):zoom( 0.4 )
+			self:diffuse(Color.Black):zoom( 0.8 )
 			self:y( _screen.cy-71 )
 			self:x(134.5 * (player==PLAYER_1 and -1 or 1))
 

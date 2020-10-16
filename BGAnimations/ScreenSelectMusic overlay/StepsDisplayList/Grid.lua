@@ -119,7 +119,7 @@ for RowNumber=1,num_rows do
 			self:horizalign(right)
 			self:y(RowNumber * height * BlockZoomY)
 			self:x( IsUsingWideScreen() and -140 or -126 )
-			self:zoom(0.3)
+			self:zoom(0.6)
 		end,
 		SetCommand=function(self, params)
 			-- diffuse and set each chart's difficulty meter

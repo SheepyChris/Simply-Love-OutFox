@@ -59,12 +59,12 @@ af[#af+1] = LoadActor( THEME:GetPathG("", "_header.lua") )
 -- session timer in EventMode
 if PREFSMAN:GetPreference("EventMode") then
 
-	af[#af+1] = LoadFont("Wendy/_wendy monospace numbers")..{
+	af[#af+1] = LoadFont("Wendy/_wendy white")..{
 		Name="Session Timer",
 		InitCommand=function(self)
 			bmt_actor = self
-			self:zoom( SL_WideScale(0.3, 0.36) )
-			self:y( SL_WideScale(3.15, 3.5) / self:GetZoom() )
+			self:zoom( SL_WideScale(1, 1.06) )
+			self:y( SL_WideScale(15.15, 15.5) / self:GetZoom() )
 			self:diffusealpha(0):x(_screen.cx)
 		end,
 		OnCommand=function(self)
@@ -93,10 +93,10 @@ end
 -- "ITG" or "FA+"; aligned to right of screen
 af[#af+1] = LoadFont("Common Header")..{
 	Name="GameModeText",
-	Text=LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini"),
+	Text=ToUpper(LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini")),
 	InitCommand=function(self)
-		self:diffusealpha(0):halign(1):y(15)
-		self:zoom( SL_WideScale(0.5, 0.6) )
+		self:diffusealpha(0):halign(1):y(15):zoom( SL_WideScale(1, 1.1) )
+		:maxwidth( SL_WideScale( 220, 400 ) )
 
 		-- move the GameMode text further left if MenuTimer is enabled
 		if PREFSMAN:GetPreference("MenuTimer") then

@@ -42,7 +42,7 @@ local af = Def.ActorFrame{
 
 --percent score
 af[#af+1] = LoadFont("Common Bold")..{
-	InitCommand=function(self) self:zoom(0.5):horizalign(align1):x(col1x):y(-24) end,
+	InitCommand=function(self) self:horizalign(align1):x(col1x):y(-24) end,
 	DrawStageCommand=function(self)
 		if playerStats and score then
 
@@ -69,7 +69,7 @@ af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
 		self:y(17)
 		self:x(col1x + (player==PLAYER_1 and -1 or 1))
-		self:horizalign(align1):zoom(0.65)
+		self:horizalign(align1):zoom(1.15)
 	end,
 	DrawStageCommand=function(self)
 		if playerStats==nil then self:settext(""); return end
@@ -139,7 +139,7 @@ for i=1,#TNSTypes do
 
 	af[#af+1] = LoadFont("Common Bold")..{
 		InitCommand=function(self)
-			self:zoom(0.28):horizalign(align2):x(col2x):y(i*13 - 50)
+			self:zoom(0.56):horizalign(align2):x(col2x):y(i*13 - 50)
 				:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] )
 		end,
 		DrawStageCommand=function(self, params)

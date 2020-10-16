@@ -33,9 +33,9 @@ for i=1,#TapNoteScores.Types do
 
 	-- actual numbers
 	t[#t+1] = Def.RollingNumbers{
-		Font="Wendy/_ScreenEvaluation numbers",
+		Font="Wendy/_wendy white",
 		InitCommand=function(self)
-			self:zoom(0.5):horizalign(right)
+			self:zoom(1.15):horizalign(right)
 
 			if SL.Global.GameMode ~= "ITG" then
 				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] )
@@ -74,8 +74,8 @@ for index, RCType in ipairs(RadarCategories.Types) do
 
 	-- player performance value
 	t[#t+1] = Def.RollingNumbers{
-		Font="Wendy/_ScreenEvaluation numbers",
-		InitCommand=function(self) self:zoom(0.5):horizalign(right):Load("RollingNumbersEvaluationB") end,
+		Font="Wendy/_wendy white",
+		InitCommand=function(self) self:horizalign(right):Load("RollingNumbersEvaluationB") end,
 		BeginCommand=function(self)
 			self:y((index-1)*35 + 53)
 			self:x( RadarCategories.x[ToEnumShortString(side)] )
@@ -94,8 +94,8 @@ for index, RCType in ipairs(RadarCategories.Types) do
 	}
 
 	-- possible value
-	t[#t+1] = LoadFont("Wendy/_ScreenEvaluation numbers")..{
-		InitCommand=function(self) self:zoom(0.5):horizalign(right) end,
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
+		InitCommand=function(self) self:horizalign(right) end,
 		BeginCommand=function(self)
 			self:y((index-1)*35 + 53)
 			self:x( ((side == PLAYER_1) and -114) or 286 )

@@ -7,10 +7,10 @@ return Def.ActorFrame{
 	},
 
 	LoadFont("Common Bold")..{
-		Text=THEME:GetString("ScreenSelectMusic", "Press Start for Options"),
-		InitCommand=function(self) self:visible(false):Center():zoom(0.75) end,
+		Text=ToUpper(THEME:GetString("ScreenSelectMusic", "Press Start for Options")),
+		InitCommand=function(self) self:visible(false):Center() end,
 		ShowPressStartForOptionsCommand=function(self) self:visible(true) end,
-		ShowEnteringOptionsCommand=function(self) self:linear(0.125):diffusealpha(0):queuecommand("NewText") end,
-		NewTextCommand=function(self) self:hibernate(0.1):settext(THEME:GetString("ScreenSelectMusic", "Entering Options...")):linear(0.125):diffusealpha(1):sleep(1) end
+		ShowEnteringOptionsCommand=function(self) self:finishtweening():linear(0.125):diffusealpha(0):playcommand("NewText") end,
+		NewTextCommand=function(self) self:settext(ToUpper(THEME:GetString("ScreenSelectMusic", "Entering Options..."))):linear(0.125):diffusealpha(1):sleep(1) end
 	}
 }

@@ -135,7 +135,7 @@ t[#t+1] = Def.ActorFrame {
 
 -- "Event Mode" or CreditText at lower-center of screen
 t[#t+1] = LoadFont("Common Footer")..{
-	InitCommand=function(self) self:xy(_screen.cx, _screen.h-16):zoom(0.5):horizalign(center) end,
+	InitCommand=function(self) self:xy(_screen.cx, _screen.h-16):zoom(0.8):horizalign(center) end,
 
 	OnCommand=function(self) self:playcommand("Refresh") end,
 	ScreenChangedMessageCommand=function(self) self:playcommand("Refresh") end,
