@@ -11,7 +11,7 @@ local function gen_vertices(player, width, height)
 		Song = GAMESTATE:GetCurrentSong()
 	end
 
-	local PeakNPS, NPSperMeasure = GetNPSperMeasure(Song, Steps)
+	local PeakNPS, NPSperMeasure , a1, a2 = LoadModule("Chart.GetNPS.lua")(Steps)
 	-- broadcast this for any other actors on the current screen that rely on knowing the peak nps
 	MESSAGEMAN:Broadcast("PeakNPSUpdated", {PeakNPS=PeakNPS})
 

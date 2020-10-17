@@ -82,15 +82,15 @@ if EarnedMachineRecord or EarnedPersonalRecord then
 
 	if HighScoreIndex.Machine+1 > 0 then
 		t[#t+1] = LoadFont("Common Bold")..{
-			Text=(ScreenString("MachineRecord")):format(HighScoreIndex.Machine+1),
-			InitCommand=function(self) self:xy(-110,-18):diffuse(PlayerColor(player)) end,
+			Text=ToUpper((ScreenString("MachineRecord")):format(HighScoreIndex.Machine+1)),
+			InitCommand=function(self) self:xy(-110,-18):zoom(1.5):diffuse(PlayerColor(player)) end,
 		}
 	end
 
 	if HighScoreIndex.Personal+1 > 0 then
 		t[#t+1] = LoadFont("Common Bold")..{
-			Text=(ScreenString("PersonalRecord")):format(HighScoreIndex.Personal+1),
-			InitCommand=function(self) self:xy(-110,24):diffuse(PlayerColor(player)) end,
+			Text=ToUpper((ScreenString("PersonalRecord")):format(HighScoreIndex.Personal+1)),
+			InitCommand=function(self) self:xy(-110,24):zoom(1.5):diffuse(PlayerColor(player)) end,
 		}
 	end
 

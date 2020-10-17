@@ -69,7 +69,7 @@ af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
 		self:y(17)
 		self:x(col1x + (player==PLAYER_1 and -1 or 1))
-		self:horizalign(align1):zoom(1.15)
+		self:horizalign(align1):zoom(0.575)
 	end,
 	DrawStageCommand=function(self)
 		if playerStats==nil then self:settext(""); return end

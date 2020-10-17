@@ -96,10 +96,10 @@ pane[#pane+1] = Def.Quad{
 -- "Early" text
 pane[#pane+1] = Def.BitmapText{
 	Font="Common Bold",
-	Text=ScreenString("Early"),
+	Text=ToUpper(ScreenString("Early")),
 	InitCommand=function(self)
 		self:addx(10):addy(-125)
-			:zoom(0.3)
+			:zoom(0.6)
 			:horizalign(left)
 	end,
 }
@@ -107,10 +107,10 @@ pane[#pane+1] = Def.BitmapText{
 -- "Late" text
 pane[#pane+1] = Def.BitmapText{
 	Font="Common Bold",
-	Text=ScreenString("Late"),
+	Text=ToUpper(ScreenString("Late")),
 	InitCommand=function(self)
 		self:addx(pane_width-10):addy(-125)
-			:zoom(0.3)
+			:zoom(0.6)
 			:horizalign(right)
 	end,
 }

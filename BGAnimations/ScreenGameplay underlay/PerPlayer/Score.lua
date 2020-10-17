@@ -132,7 +132,8 @@ return LoadFont("Wendy/_wendy white")..{
 					if  IsUltraWide and NumPlayers > 1 then
 						self:y(_screen.cy - 2)
 					else
-						self:y( _screen.cy + 42 )
+						local Name, Length = LoadModule("Options.SmartTapNoteScore.lua")()
+						self:y( _screen.cy + (Length > 8 and -180 or 42) )
 					end
 				end
 

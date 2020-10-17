@@ -3,8 +3,14 @@ local player, side = unpack(...)
 local pn = ToEnumShortString(player)
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
+local Name, Length = LoadModule("Options.SmartTapNoteScore.lua")()
+local CurPrefTiming = LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini")
+table.sort(Name)
+Length = Length + 1
+Name[#Name+1] = "Miss"
+
 local TapNoteScores = {
-	Types = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' },
+	Types = Name,
 	-- x values for P1 and P2
 	x = { P1=64, P2=94 }
 }
@@ -27,6 +33,9 @@ local t = Def.ActorFrame{
 }
 
 -- do "regular" TapNotes first
+local coloring = LoadModule("SL/SL.JudgmentColor.lua"):GetGameModeColor()
+local yscaleset = Length > 6 and scale( Length, 6, 11, 35, 18.5 ) or 35
+local zoomscale = Length > 6 and scale( Length, 6, 11, 1.15, 0.75 ) or 1.15
 for i=1,#TapNoteScores.Types do
 	local window = TapNoteScores.Types[i]
 	local number = pss:GetTapNoteScores( "TapNoteScore_"..window )
@@ -35,10 +44,10 @@ for i=1,#TapNoteScores.Types do
 	t[#t+1] = Def.RollingNumbers{
 		Font="Wendy/_wendy white",
 		InitCommand=function(self)
-			self:zoom(1.15):horizalign(right)
+			self:zoom( zoomscale ):horizalign(right)
 
-			if SL.Global.GameMode ~= "ITG" then
-				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] )
+			if CurPrefTiming ~= "ITG" then
+				self:diffuse( coloring["TapNoteScore_" .. window] )
 			end
 
 			-- if some TimingWindows were turned off, the leading 0s should not
@@ -58,7 +67,7 @@ for i=1,#TapNoteScores.Types do
 		end,
 		BeginCommand=function(self)
 			self:x( TapNoteScores.x[ToEnumShortString(side)] )
-			self:y((i-1)*35 -20)
+			self:y((i-1)*yscaleset -20)
 			self:targetnumber(number)
 		end
 	}

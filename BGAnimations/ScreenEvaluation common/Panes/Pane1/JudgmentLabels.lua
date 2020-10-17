@@ -3,7 +3,8 @@ local player, side = unpack(...)
 local pn = ToEnumShortString(player)
 local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
 
-local tns_string = "TapNoteScore" .. (SL.Global.GameMode=="ITG" and "" or SL.Global.GameMode)
+local f = LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini")
+local tns_string = f
 
 local firstToUpper = function(str)
     return (str:gsub("^%l", string.upper))
@@ -17,9 +18,14 @@ end
 local nice = ThemePrefs.Get("nice") > 0 and SL.Global.GameMode ~= "Casual"
 
 -- Iterating through the enum isn't worthwhile because the sequencing is so bizarre...
+local Name, Length = LoadModule("Options.SmartTapNoteScore.lua")()
+local CurPrefTiming = LoadModule("Config.Load.lua")("SmartTimings","Save/OutFoxPrefs.ini")
+table.sort(Name)
+Length = Length + 1
+Name[#Name+1] = "Miss"
+
 local TapNoteScores = {}
-TapNoteScores.Types = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' }
-TapNoteScores.Names = map(getStringFromTheme, TapNoteScores.Types)
+TapNoteScores.Types = Name
 
 local RadarCategories = {
 	THEME:GetString("ScreenEvaluation", 'Holds'),
@@ -48,23 +54,26 @@ local t = Def.ActorFrame{
 }
 
 local windows = SL.Global.ActiveModifiers.TimingWindows
-
+local coloring = LoadModule("SL/SL.JudgmentColor.lua"):GetGameModeColor()
 --  labels: W1 ---> Miss
+lua.ReportScriptError( Length )
+local yscaleset = Length > 6 and scale( Length, 6, 11, 28, 15 ) or 28
+local zoomscale = Length > 6 and scale( Length, 6, 11, 0.833, 0.5 ) or 0.833
 for i=1, #TapNoteScores.Types do
 	-- no need to add BitmapText actors for TimingWindows that were turned off
-	if windows[i] or i==#TapNoteScores.Types then
+	if true then
 
 		local window = TapNoteScores.Types[i]
-		local label = getStringFromTheme( window )
+		local label = getStringFromTheme( "Judgment"..window )
 
 		t[#t+1] = LoadFont("Common Normal")..{
 			Text=(nice and scores_table[window] == 69) and 'NICE' or label:upper(),
-			InitCommand=function(self) self:zoom(0.833):horizalign(right):maxwidth(76) end,
+			InitCommand=function(self) self:zoom(zoomscale):horizalign(right):maxwidth(76) end,
 			BeginCommand=function(self)
 				self:x( (side == PLAYER_1 and 28) or -28 )
-				self:y((i-1)*28 -16)
+				self:y((i-1)*yscaleset -16)
 				-- diffuse the JudgmentLabels the appropriate colors for the current GameMode
-				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] )
+				self:diffuse( coloring["TapNoteScore_"..window] )
 			end
 		}
 	end
