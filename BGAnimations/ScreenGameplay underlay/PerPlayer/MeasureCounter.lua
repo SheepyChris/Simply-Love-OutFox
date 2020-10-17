@@ -141,7 +141,7 @@ end
 -- so many players have become so reliant on...
 local font = mods.ComboFont
 if font == "Wendy" or font == "Wendy (Cursed)" then
-	font = "Wendy/_wendy small"
+	font = "Wendy/_wendy white"
 else
 	font = "_Combo Fonts/" .. font .. "/"
 end
@@ -170,7 +170,7 @@ for i=lookAhead+1,1,-1 do
 			local columnWidth = width/NumColumns
 
 			-- Have descending zoom sizes for each new BMT we add.
-			self:zoom(0.35 - 0.05 * (i-1)):shadowlength(1):horizalign(center)
+			self:zoom( font == "Wendy/_wendy white" and 0.7 or 0.35 - 0.05 * (i-1)):shadowlength(1):horizalign(center)
 			self:xy(GetNotefieldX(player) + columnWidth * (0.7 * (i-1)), _screen.cy)
 
 			if mods.MeasureCounterLeft then
