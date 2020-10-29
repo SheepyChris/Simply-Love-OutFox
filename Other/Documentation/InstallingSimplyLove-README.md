@@ -10,13 +10,9 @@ If you are upgrading from a previous version of Simply Love, fully delete the ol
 
 ## 2. Download
 
-You can download the current Simply Love release at the **[Latest Release](https://github.com/quietly-turning/Simply-Love-SM5/releases/latest)** page.
+For this specific fork, it is recommended to download from Code > Download ZIP button in the release branch. This is where OutFox commits will be available.
 
-As of this writing, GitHub puts the download link at the bottom of the release page, under the **Assets** header.
-
-![download a Simply Love release](https://i.imgur.com/5ELYPW1l.png)
-
-GitHub also provides two separate downloads (zip and tag.gz) labeled "Source code" under Assets.  If you just want to download and use Simply Love, you can safely ignore those. 🙂
+![download Simply Love OutFox](https://i.imgur.com/Q8OTVZQ.png)
 
 ## 3. Unzip, Install
 
