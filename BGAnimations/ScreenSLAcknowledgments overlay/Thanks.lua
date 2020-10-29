@@ -52,17 +52,17 @@ return {
 		{
 			Name="SM5 Dev Team",
 			Img="stepmania.png",
-			About="Theming in SM5 is easier and more robust than it is in SM3.95.  Thank you shakesoda, wolfman2000, Midiman, roothorick, cybik, et al!  Thanks to the OG team as well, including Chris Danford, Glenn Maynard, and Steve Checkoway.\n\nI am happy to see new and enthusiastic people working on the next iteration of open source dance games, including Lirodon, Jousway, MrThatKid, RyTak, and Squirrel."
+			About="Theming in SM5 is easier and more robust than it is in SM3.95.  Thank you shakesoda, wolfman2000, Midiman, roothorick, cybik, et al!  Thanks to the OG team as well, including Chris Danford, Glenn Maynard, and Steve Checkoway.\n\nI am happy to see new and enthusiastic people working on the next iteration of open source dance games, including Lirodon, MrThatKid, JoseVarela, Jousway, Cube, and Squirrel."
 		},
 		{
 			Name="kyzentun",
 			Img="kyzentun.png",
-			About="kyzentun answered many of my theming questions on IRC and went out of his way to fix source-related issues that helped me along my way."
+			About="kyzentun answered many of my theming questions on IRC and went out of his way to fix issues in the StepMania engine that helped make earlier releases of Simply Love easier for me."
 		},
 		{
 			Name="GitHub Community",
 			Img="GitHub.png",
-			About="Many thanks go to the GitHub users who have contributed to SL over the years.  This includes:\n\nKauhsa, OmnipotentEntity, ianklatzco, FishamanP, itg-abby, camsta4, fent, iamjackg, tertu-m, Horsey-, Akethorpe, tfrederick74656, DinsFire64, sahunt, StefanoFiumara, concubidated, sangyeolbaek, nayotodot, dougshell, shockdude, Sereni, karamel59, electromuis, Fieoner, arcaneAgilmente, ListenerJubatus, TheNick, CrashCringle12, jordando, Roujo, JapanYoshi, and natano."
+			About="Many thanks go to the GitHub users who have contributed to SL over the years.  This includes:\n\nKauhsa, OmnipotentEntity, ianklatzco, FishamanP, itg-abby, camsta4, fent, iamjackg, tertu-m, Horsey-, Akethorpe, tfrederick74656, DinsFire64, sahunt, StefanoFiumara, concubidated, sangyeolbaek, nayotodot, dougshell, shockdude, Sereni, karamel59, electromuis, mcognetta, Fieoner, arcaneAgilmente, ListenerJubatus, aeubanks, JapanYoshi, TheNick, CrashCringle12, jordando, Roujo, mmagdon, Valentina16, and natano."
 		},
 	},
 
@@ -76,13 +76,13 @@ return {
 		{
 			Name="Sujeet / teejusb",
 			Img="teejusb.jpg",
-			About="Sujeet was a great fount of general CS knowledge, and patiently answered my questions about data structures and algorithms many times.\n\nHe also runs the U.P.S. tournament series, which showcases custom content for SM5 in a lighthearted and fun way."
+			About="Sujeet was a great fount of general CS knowledge, and patiently answered my questions about data structures and algorithms many times.  He has contributed significantly to Simply Love, helping make features like GrooveStats QR codes and MeasureCounter lookahead possible.\n\nSujeet also runs the U.P.S. tournament series, which showcases custom content for SM5 in a lighthearted and fun way."
 		},
 
 		{
 			Name="Paul J Kim",
 			Img="pjk.png",
-			About="Paul provided support when I needed it, and helped make Simply Love more robust by testing odd combinations of things that would never have occurred to me otherwise.\n\nFor example, placing a reasonable upper limit on user-input strings: maybe it's a good idea, maybe sometimes it's not. Maybe players SHOULD be allowed to put whatever they want as the DisplayName in Editable.ini.  Maybe Simply Love SHOULDN'T do anything to keep string length in check. Who's really to say? Whether 'tis nobler in the mind to suffer the mines and arrows of Ride, or to take arms against a sea of memes, and by opposing what I am doing?"
+			About="Paul provided support when I needed it, and helped make Simply Love more robust by testing odd combinations of things that would never have occurred to me otherwise.\n\nFor example, placing a reasonable upper limit on user-input text: maybe it's a good idea, maybe sometimes it's not. Maybe players SHOULD be allowed to put whatever they want as the DisplayName in Editable.ini.  Maybe Simply Love SHOULDN'T do anything to keep text length in check. Who's really to say? Whether 'tis nobler in the mind to suffer the mines and arrows of Ride, or to take arms against a sea of memes, and by opposing what I am doing?"
 		}
 	},
 
@@ -90,12 +90,12 @@ return {
 	{
 		{
 			Name="Dance Dance Maniacs",
-			Img={ "ddm/2020.jpg", "ddm/2019.jpg", "ddm/2017.jpg", "ddm/2015.jpg", "ddm/2018.jpg", "ddm/2015b.jpg", "ddm/2012.jpg", "ddm/2010.jpg" },
-			About="The PSU Dance Dance Maniacs dance gamed with me at my best and worst.\n\nLightningXCE, Zyroplex, Captain Swagonforce, rawinput, milk, teejusb, NBCrescendo, Vidur, freemansbackup, chronohat\n\nDJ OMiY, minomotu, Kristina, blakjakal, Vale, Silverheart97, AndyBeard, Alex, tfrederick, Catherine, Elena, Jonathan, Eileen, Ali, Anna\n\nRime, PirateKing, Fox, Lev, Cathy, Grant, Koopa, CCTV, MathMatt, TheNick, Nate(s), Crash Cringle, Daisy1218, Miaou Miaou Miaou, Silverwolfstar, and more."
+			Img={ "ddm/2020.jpg", "ddm/2019.jpg", "ddm/2017.jpg", "ddm/2016.jpg", "ddm/2015b.jpg", "ddm/2016b.jpg", "ddm/2015.jpg", "ddm/2018.jpg", "ddm/2012.jpg", "ddm/2010.jpg", "ddm/2009.jpg", "ddm/2016HolidayCheer.jpg" },
+			About="The PSU Dance Dance Maniacs dance gamed with me at my best and worst.\n\nLightningXCE, Zyroplex, Captain Swagonforce, rawinput, milk, teejusb, NBCrescendo, Vidur, freemansbackup, chronohat\n\nDJ OMiY, minomotu, Kristina, blakjakal, Vale, Silverheart97, AndyBeard, Alex, tfrederick, Catherine, Elena, Jonathan, Eileen, Ali, Anna\n\nRime, PirateKing, Fox, Lev, Cathy², Grant, Koopa, CCTV, MathMatt, TheNick, Nate(s), Crash Cringle, Daisy1218, Miaou Miaou Miaou, Silverwolfstar, and more."
 		},
 		{
 			Name="DDRIllini",
-			Img={ "uiuc/uiuc.jpg", "uiuc/uiuc2.jpg", "uiuc/uiuc3.jpg", "uiuc/uiuc4.jpg", "uiuc/uiuc5.jpg", "uiuc/wendy.jpg" },
+			Img={ "uiuc/uiuc.jpg", "uiuc/uiuc2.jpg", "uiuc/uiuc3.jpg", "uiuc/uiuc4.jpg", "uiuc/uiuc5.jpg", "uiuc/uiuc6.jpg", "uiuc/wendy.jpg" },
 			About="Thanks to the DDRIllini crew for being DDM's loving counterpart a time zone away.  I have fond memories of driving with DDM friends to DDRIllini's annual Rumble in the Prairie events each spring.\n\nThank you, Kyt-Xune, Z0rk, feedbacker, Sudzi, ian5v, Benpai, pez, mtgmackid, Krysel, Kasemei, Juni, rikame, Mary, andrewipark, et al!"
 		}
 	},
@@ -111,7 +111,7 @@ return {
 		{
 			Name="Alan / TaroNuke",
 			Img="taronuke.png",
-			About="Alan's programming work with the UKSRT and Mawaru series blows away every preconceived notion you've ever had of what dance games can be. The results are amusing, startling, incredible, and always fun.\n\nHe's a good friend, and has helped me be a kinder human being."
+			About="Alan leads development on NotITG, a StepMania fork that focuses on creative \"mod\" content.\n\nAlan's creative resumé includes some of best and most memorable content available, from the UKSRT and the Mawaru series, to the Simply Thonk experience found in this theme.\n\nThe community he has fostered around NotITG is warm and welcoming, and I am so fortunate to live in this timeline where he exists."
 		},
 		{
 			Name="bblum",
@@ -125,7 +125,7 @@ return {
 		{
 			Name="Ian / Archi",
 			Img="archi.png",
-			About="I'm pretty sure the Pendulum packs singlehandedly instigated the notion that \"ITG is all streams\" and we have Ian to thank/blame for that.\n\nWhile Ian has top-tier competitive stamina, his greatest strength is his eagerness to improve the community.  He is the driving force behind Stamina RPG, Stamina Con, Stamina visual novels, and literally hundreds of original stepcharts – all of which has dramatically shaped the post-ITG scene as we know it."
+			About="I'm pretty sure the Pendulum packs singlehandedly instigated the notion that \"ITG is all streams\" and we have Ian to thank/blame for that.\n\nThough Ian has top-tier competitive stamina, his greatest strength is his eagerness to improve the community.  He is the driving force behind Stamina RPG, Stamina Con, Stamina visual novels, and literally hundreds of original stepcharts – all of which has dramatically shaped the post-ITG scene as we know it."
 		},
 		{
 			Name="Brittney / Galaga",
@@ -168,26 +168,41 @@ return {
 		{
 			Name="TheNick",
 			Img="TheNick.jpg",
-			About="Nick enthusiastically translated Simply Love's UI into German.  He's also something of a memer and has been responsible for such magical experiences as What a Wonderful World (UPS4). 👌\n\nWhen I left Penn State, I initially wondered what would become of the arcade machine there.  Would it fall into disrepair?\n\nDuring my first visit back, I saw a then-freshman Nick already quoting Shady Business like he and Mr. Nagasaki went way back.  I understood immediately that the future of dance games would be just fine."
+			About="Nick enthusiastically translated Simply Love's UI into German.  He's also something of a memer and has been responsible for such magical experiences as What a Wonderful World (UPS4).\n\nWhen I left Penn State, I initially wondered what would become of the arcade machine there.  Would it fall into disrepair?\n\nDuring my first visit back, I saw a then-freshman Nick already quoting Shady Business like he and Mr. Nagasaki went way back.  I understood immediately that the future of dance games would be just fine."
 		},
 	},
 
 	-- page 11
+
 	{
 		{
 			Name="Riakodoadm",
 			Img="Riakodoadm.jpg",
-			About="Riakodoadm wrote music for Simply Love and provided social support when I needed it. We spent many late nights commiserating with one another over Lua, programming, and music games.\n\nShe's working on an awesome new SM5 theme that you should check out when it is ready."
+			About="Riakodoadm wrote music for Simply Love and provided social support when I needed it. We've spent many late nights commiserating with one another over Lua, programming, and music games.\n\nRiakodoadm prides herself in producing every aspect of the projects she takes on.  She's the lead programmer, designer, artist, musician, and creative energy behind an uncoming SM5 theme in the works for over five years.  I'm looking forward to using that Someday Soon™ and you should be, too. :^)"
 		},
 
 		{
 			Name="pluto",
 			Img="pluto.png",
-			About="Pluto has supplied exceptional art for many dance game events such as ECS and Nordic Cup, and has infused each with her signature style.\n\nWhen she collaborated with me on my Distant Towers visual novel project, her artistic output brought life and vitality to my moribund mind, and her feedback as a friend kept my soul on life support and my heart beating while I was otherwise dead.",
+			About="Pluto has created exceptional art for many dance game projects such as ECS, Stamina RPG, and SteveReen's Waterfall project, and has infused each with her signature style.\n\nWhen she collaborated with me on my visual novel, her artistic output brought life and vitality to my moribund mind, and her feedback as a friend kept my soul on life support and my heart beating while I was otherwise dead.",
 		},
 	},
 
 	-- page 12
+	{
+		{
+			Name="Lamar / Crash Cringle",
+			Img="CrashCringle.png",
+			About="Lamar is a visible leader for the Penn State Dance Dance Maniacs, handling everything from managing administrative duties and promotional events, to upkeeping the pads and Arch Linux SM5 PC, to writing stepcharts and Lua-driven theme customizations.\n\nBy engaging current club members with recurring events like the Good Reads Tournament and actively promoting the club to new students, he goes above and beyond to keep dance games alive.\n\nLamar is a truly upstanding young man, one I am so very fortunate to know."
+		},
+		{
+			Name="Jeremy",
+			Img={ "jb/JB-pixelart.jpg", "jb/ParanoiaHadesCDP.mp4",  "jb/NaokiStandard.jpg" },
+			About="Jeremy is a dedicated pixel artist on a mission to help the world smile through retro video game aesthetic. He has contributed visual art and design feedback to Simply Love many times, helping make a better experience for everyone.\n\nOne time, when I was young and stupid and trying to jog 4 miles home from the arcade in below-freezing temperatures in shorts and a t-shirt, Jeremy was the person I called to save my sorry, freezing butt.\n\nWe've been dance game compatriots and best friends for nearly 20 years, which both humbles and warms me."
+		}
+	},
+
+	-- page 13
 	{
 		{
 			Name="quietly-turning",

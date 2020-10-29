@@ -3,13 +3,17 @@ local PlayerState  = GAMESTATE:GetPlayerState(player)
 local SongPosition = GAMESTATE:GetPlayerState(player):GetSongPosition()
 local rate = SL.Global.ActiveModifiers.MusicRate
 
+local NoteFieldIsCentered = (GetNotefieldX(player) == _screen.cx)
+local IsUltraWide = (GetScreenAspectRatio() > 21/9)
+
 -- -----------------------------------------------------------------------
--- reference to the BitmapText actor that will display elapsed time (current BitmapText)
-local curBMT
+-- reference to the BitmapText actor that will display remaining time
+local remBMT
+-- how wide (in visual pixels) the total time is, used to offset the label
+local total_width
 
--- simple flag used in the Update function to stop updating curBMT once the player runs out of life
+-- simple flag used in the Update function to stop updating remBMT once the player runs out of life
 local alive = true
-
 
 -- -----------------------------------------------------------------------
 -- prefer the engine's SecondsToHMMSS()
@@ -45,6 +49,12 @@ else
 		totalseconds = song:GetLastSecond()
 	end
 end
+
+-- totalseconds is initilialzed in the engine as -1
+-- https://github.com/stepmania/stepmania/blob/6a645b4710/src/Song.cpp#L80
+-- and might not have ever been set to anything meaningful in edge cases
+-- e.g. ogg file is 5 seconds, ssc file has 1 tapnote occuring at beat 0
+if totalseconds < 0 then totalseconds = 0 end
 
 -- factor in MusicRate
 totalseconds = totalseconds / rate
@@ -92,8 +102,13 @@ if GAMESTATE:IsCourseMode() then
 	end
 end
 
--- variable scoped to this entire file, updated in CurrentSongChangedMessageCommand
--- so it can be included in calculatations in Update()
+-- use seconds_offset in CourseMode to initialize timer text
+-- for songs after the first
+-- (i.e. by the start of the 4th song, 6 minutes have already elapsed)
+--
+-- seconds_offset is scoped to this entire file and updated in
+-- CurrentSongChangedMessageCommand so it can be referenced
+-- from within Update()
 local seconds_offset = 0
 
 -- -----------------------------------------------------------------------
@@ -107,11 +122,11 @@ local Update = function(af, delta)
 	-- the beginnging depending on how the stepartist set the offset
 	-- don't show negative time; just use 0
 	if SongPosition:GetMusicSeconds() < 0 then
-		curBMT:settext(fmt(seconds_offset))
+		remBMT:settext(fmt(totalseconds - seconds_offset))
 		return
 	end
 
-	curBMT:settext( fmt((SongPosition:GetMusicSeconds() / rate) +  seconds_offset) )
+	remBMT:settext( fmt(clamp(totalseconds - seconds_offset - (SongPosition:GetMusicSeconds()/rate), 0, totalseconds)) )
 end
 
 -- -----------------------------------------------------------------------
@@ -119,7 +134,17 @@ end
 local af = Def.ActorFrame{}
 af.InitCommand=function(self)
 	self:SetUpdateFunction(Update)
-	self:xy(-85,-50)
+	self:x(SL_WideScale(150,202) * (player==PLAYER_1 and -1 or 1))
+	self:y(-40)
+
+	if NoteFieldIsCentered and IsUsingWideScreen() then
+		self:x( 154 * (player==PLAYER_1 and -1 or 1) )
+	end
+
+	-- flip alignment when ultrawide and both players joined
+	if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+		self:x(self:GetX() * -1)
+	end
 end
 
 af.CurrentSongChangedMessageCommand=function(self,params)
@@ -140,18 +165,19 @@ af.CurrentSongChangedMessageCommand=function(self,params)
 end
 
 -- -----------------------------------------------------------------------
--- current time label
-
-af[#af+1] = LoadFont("Common Normal")..{
-	Text=("%s "):format( THEME:GetString("ScreenGameplay", "Elapsed") ),
-	InitCommand=function(self) self:horizalign(right):xy(-6, 0):zoom(0.833) end
-}
-
--- current time number
+-- remaining time number
 af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
-		curBMT = self
-		self:horizalign(left):xy(0,0)
+		remBMT = self
+		self:x(0)
+		self:halign(PlayerNumber:Reverse()[player]):vertalign(bottom)
+
+		-- flip alignment and adjust for smaller pane size
+		-- when ultrawide and both players joined
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			self:halign( PlayerNumber:Reverse()[OtherPlayer[player]] )
+			self:x(50 * (player==PLAYER_1 and -1 or 1))
+		end
 	end,
 
 	-- HealthStateChanged is going to be broadcast quite a bit by the engine.
@@ -159,7 +185,7 @@ af[#af+1] = LoadFont("Common Normal")..{
 	-- their lifemeter and run out of life, but I don't see anything specifically being
 	-- broadcast for that.  So, this.
 	HealthStateChangedMessageCommand=function(self, params)
-		-- color time red if the player reaches a HealthState of Dead
+		-- color the BitmapText actor red if the player reaches a HealthState of Dead
 		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" then
 			self:diffuse(color("#ff3030"))
 			alive = false
@@ -167,30 +193,87 @@ af[#af+1] = LoadFont("Common Normal")..{
 	end
 }
 
--- -----------------------------------------------------------------------
--- total time label
--- "song" in normal gameplay, "course" in CourseMode
-
+-- remaining time label
 af[#af+1] = LoadFont("Common Normal")..{
+	Text=("%s "):format( THEME:GetString("ScreenGameplay", "Remaining") ),
 	InitCommand=function(self)
-		self:horizalign(right):xy(-6, 20):zoom(0.833)
+		self:halign(PlayerNumber:Reverse()[player]):vertalign(bottom)
+		self:zoom(0.833)
 
-		local s = GAMESTATE:IsCourseMode() and THEME:GetString("ScreenGameplay", "Course") or THEME:GetString("ScreenGameplay", "Song")
-		self:settext( ("%s "):format(s) )
+		-- flip alignment and adjust for smaller pane size
+		-- when ultrawide and both players joined
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			self:halign( PlayerNumber:Reverse()[OtherPlayer[player]] )
+			self:x(50 * (player==PLAYER_1 and -1 or 1))
+		end
+	end,
+	OnCommand=function(self)
+		if player==PLAYER_1 then
+			self:x( 32 + (total_width-28))
+		else
+			self:x(-32 - (total_width-28))
+		end
+
+		-- flip offset when ultrawide and both players
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			if player==PLAYER_1 then
+				self:x(-86 - (total_width-28))
+			else
+				self:x( 86 + (total_width-28))
+			end
+		end
 	end
 }
 
+-- -----------------------------------------------------------------------
 -- total time number
 -- song duration in normal gameplay, overall course duration in CourseMode
 af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
-		self:horizalign(left):xy(0,20)
-
-
+		self:xy(0,20)
+		self:halign(PlayerNumber:Reverse()[player]):vertalign(bottom)
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			self:halign( PlayerNumber:Reverse()[OtherPlayer[player]] )
+			self:x(50 * (player==PLAYER_1 and -1 or 1))
+		end
 
 		self:settext( fmt(totalseconds) )
+		total_width = self:GetWidth()
 	end
 }
+
+-- total time label
+-- "song" in normal gameplay, "course" in CourseMode
+af[#af+1] = LoadFont("Common Normal")..{
+	InitCommand=function(self)
+		self:zoom(0.833)
+		self:halign(PlayerNumber:Reverse()[player]):vertalign(bottom)
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			self:halign( PlayerNumber:Reverse()[OtherPlayer[player]] )
+		end
+
+		local s = GAMESTATE:IsCourseMode() and THEME:GetString("ScreenGameplay", "Course") or THEME:GetString("ScreenGameplay", "Song")
+		self:settext( ("%s "):format(s) )
+	end,
+	OnCommand=function(self)
+		if player==PLAYER_1 then
+			self:x(32 + (total_width-28))
+		else
+			self:x(-32 - (total_width-28))
+		end
+		self:y(20)
+
+		-- flip offset when ultrawide and both players
+		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+			if player==PLAYER_1 then
+				self:x(-86 - (total_width-28))
+			else
+				self:x( 86 + (total_width-28))
+			end
+		end
+	end
+}
+
 -- -----------------------------------------------------------------------
 
 return af

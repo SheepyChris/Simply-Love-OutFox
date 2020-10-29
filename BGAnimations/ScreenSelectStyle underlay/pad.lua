@@ -1,5 +1,20 @@
-local _zoom = SL_WideScale(0.435, 0.525)
-local _game = GAMESTATE:GetCurrentGame():GetName()
+local color_used, color_unused, padNum, style = unpack(...)
+
+color_used   = color_used   or {1, 1, 1, 1.0}
+color_unused = color_unused or (DarkUI() and {0.25,0.25,0.25,1} or {1, 1, 1, 0.3})
+padNum = padNum or 1
+style  = style  or (GAMESTATE:GetCurrentStyle() and GAMESTATE:GetCurrentStyle():GetName())
+
+
+local zoom = SL_WideScale(0.435, 0.525)
+local game = GAMESTATE:GetCurrentGame():GetName()
+
+local init_panel = function(self, col, row, z)
+	self:zoom(z)
+	self:x(z * self:GetWidth()  * (col-1))
+	self:y(z * self:GetHeight() * (row-2))
+	return self
+end
 
 local layouts = {
 	dance    = { false, true,  false, true,  false, true,  false, true,  false },
@@ -9,47 +24,53 @@ local layouts = {
 	inactive = { false, false, false, false, false, false, false, false, false }
 }
 
-return function(color_used, color_unused)
+-- -----------------------------------------------------------------------
 
-	color_used   = color_used   or {1, 1, 1, 1.0}
-	color_unused = color_unused or (DarkUI() and {0.25,0.25,0.25,1} or {1, 1, 1, 0.3})
+local pad = Def.ActorFrame{}
 
-	local layout = layouts[_game] or layouts.dance
+for row=0,2 do
+	for col=0,2 do
+		local panel_index = row*3+col+1
 
-	local pad = Def.ActorFrame{}
+		local panel_af = Def.ActorFrame{}
+		panel_af.InitCommand=function(self)  end
+		panel_af.SetCommand=function(self, params)
+			local layout = layouts[game] or layouts.dance
 
-	for row=0,2 do
-		for col=0,2 do
-			pad[#pad+1] = LoadActor("rounded-square.png")..{
-				InitCommand=function(self)
-					self:zoom(_zoom)
-					self:x(_zoom * self:GetWidth()  * (col-1))
-					self:y(_zoom * self:GetHeight() * (row-2))
-				end,
-				SetCommand=function(self, params)
-					local layout = layouts[_game] or layouts.dance
+			if game=="dance" and style=="solo" then
+				layout = layouts.solo
+			end
 
-					local style = params.style or (GAMESTATE:GetCurrentStyle() and GAMESTATE:GetCurrentStyle():GetName())
-					-- simplify the style string to handle technomotion's single8 and double8
-					style = style:gsub("8", "")
+			if  params and params.Player
+			and not GAMESTATE:IsHumanPlayer(params.Player)
+			and style ~= "double"
+			then
+				layout = layouts.inactive
+			end
 
-					if _game=="dance" and style=="solo" then layout = layouts.solo end
-
-					if params.Player then
-						if not GAMESTATE:IsHumanPlayer(params.Player) and style ~= "double" then
-							layout = layouts.inactive
-						end
-					end
-
-					if layout[row*3+col+1] then
-						self:diffuse(color_used)
-					else
-						self:diffuse(color_unused)
-					end
-				end
-			}
+			self:GetParent():playcommand("Reassess", layout)
 		end
-	end
 
-	return pad
+		panel_af[#panel_af+1] = LoadActor("rounded-square.png")..{
+			InitCommand=function(self) init_panel(self, col, row, zoom) end,
+			ReassessCommand=function(self, layout)
+				if layout[panel_index] then
+					self:diffuse(color_used)
+				else
+					self:diffuse(color_unused)
+				end
+			end
+		}
+
+		pad[#pad+1] = panel_af
+	end
 end
+
+-- -----------------------------------------------------------------------
+-- https://www.youtube.com/watch?v=PKx_ihQ7mrY&lc=UgxXSurH391nm907OEh4AaABAg
+if IsSpooky() then
+	pad[#pad+1] = LoadActor("./ExtraSpooky.lua", {game, style, padNum, zoom, init_panel})
+end
+-- -----------------------------------------------------------------------
+
+return pad

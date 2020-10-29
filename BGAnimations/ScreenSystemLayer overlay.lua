@@ -95,43 +95,65 @@ t[#t+1] = Def.ActorFrame {
 	CreditsText( PLAYER_2 )
 }
 
-local SystemMessageText = nil
 
--- SystemMessage Text
+-- -----------------------------------------------------------------------
+-- SystemMessage stuff
+-- this is what appears when someone uses SCREENMAN:SystemMessage(text)
+-- or MESSAGEMAN:Broadcast("SystemMessage", {text})
+-- or SM(text)
+
+local bmt = nil
+
+-- SystemMessage ActorFrame
 t[#t+1] = Def.ActorFrame {
 	SystemMessageMessageCommand=function(self, params)
-		SystemMessageText:settext( params.Message )
+		bmt:settext( params.Message )
+
 		self:playcommand( "On" )
 		if params.NoAnimate then
 			self:finishtweening()
 		end
-		self:playcommand( "Off" )
+		self:playcommand( "Off", params )
 	end,
 	HideSystemMessageMessageCommand=function(self) self:finishtweening() end,
 
+	-- background quad behind the SystemMessage
 	Def.Quad {
 		InitCommand=function(self)
-			self:zoomto(_screen.w, 30):horizalign(left):vertalign(top)
-				:diffuse(Color.Black):diffusealpha(0)
+			self:zoomto(_screen.w, 30)
+			self:horizalign(left):vertalign(top)
+			self:diffuse(0,0,0,0)
 		end,
 		OnCommand=function(self)
 			self:finishtweening():diffusealpha(0.85)
-				:zoomto(_screen.w, (SystemMessageText:GetHeight() + 16) * SL_WideScale(0.8, 1) )
+			self:zoomto(_screen.w, (bmt:GetHeight() + 16) * SL_WideScale(0.8, 1) )
 		end,
-		OffCommand=function(self) self:sleep(3.33):linear(0.5):diffusealpha(0) end,
+		OffCommand=function(self, params)
+			-- use 3.33 seconds as a default duration if none was provided as the second arg in SM()
+			self:sleep(type(params.Duration)=="number" and params.Duration or 3.33):linear(0.25):diffusealpha(0)
+		end,
 	},
 
+	-- BitmapText for the SystemMessage
 	LoadFont("Common Normal")..{
 		Name="Text",
 		InitCommand=function(self)
-			self:maxwidth(_screen.w-20):horizalign(left):vertalign(top)
-				:xy(10, 10):diffusealpha(0):zoom(SL_WideScale(0.8, 1))
-			SystemMessageText = self
+			bmt = self
+
+			self:maxwidth(_screen.w-20)
+			self:horizalign(left):vertalign(top):xy(10, 10)
+			self:diffusealpha(0):zoom(SL_WideScale(0.8, 1))
 		end,
-		OnCommand=function(self) self:finishtweening():diffusealpha(1) end,
-		OffCommand=function(self) self:sleep(3):linear(0.5):diffusealpha(0) end,
+		OnCommand=function(self)
+			self:finishtweening():diffusealpha(1)
+		end,
+		OffCommand=function(self, params)
+			-- use 3 seconds as a default duration if none was provided as the second arg in SM()
+			self:sleep(type(params.Duration)=="number" and params.Duration or 3):linear(0.5):diffusealpha(0)
+		end,
 	}
 }
+-- -----------------------------------------------------------------------
 
 -- "Event Mode" or CreditText at lower-center of screen
 t[#t+1] = LoadFont("Common Footer")..{
@@ -147,7 +169,7 @@ t[#t+1] = LoadFont("Common Footer")..{
 		local screen = SCREENMAN:GetTopScreen()
 
 		-- if this screen's Metric for ShowCreditDisplay=false, then hide this BitmapText actor
-		-- PS: "ShowCreditDisplay" isn't a real Metric as far as the engine is concerned
+		-- PS: "ShowCreditDisplay" isn't a real Metric as far as the engine is concerned.
 		-- I invented it for Simply Love and it has (understandably) confused other themers.
 		-- Sorry about this.
 		if screen then
@@ -159,13 +181,22 @@ t[#t+1] = LoadFont("Common Footer")..{
 
 		elseif GAMESTATE:GetCoinMode() == "CoinMode_Pay" then
 			local credits = GetCredits()
-			local text = THEME:GetString("ScreenSystemLayer", "Credits")..'  '
-
-			text = text..credits.Credits..'  '
+			local text
 
 			if credits.CoinsPerCredit > 1 then
-				text = text .. credits.Remainder .. '/' .. credits.CoinsPerCredit
+				text = ("%s     %d     %d/%d"):format(
+					THEME:GetString("ScreenSystemLayer", "CreditsCredits"),
+					credits.Credits,
+					credits.Remainder,
+					credits.CoinsPerCredit
+				)
+			else
+				text = ("%s     %d"):format(
+					THEME:GetString("ScreenSystemLayer", "CreditsCredits"),
+					credits.Credits
+				)
 			end
+
 			self:settext(text)
 
 		elseif GAMESTATE:GetCoinMode() == "CoinMode_Free" then

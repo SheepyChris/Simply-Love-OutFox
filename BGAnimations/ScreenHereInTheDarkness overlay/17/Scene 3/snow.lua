@@ -1,4 +1,4 @@
-local num_particles = 250
+local num_particles = 300
 -- particle size in pixels
 local min_size = 12
 local max_size = 25
@@ -71,7 +71,8 @@ local af = Def.ActorFrame{
 
 -- background Quad with a black-to-blue gradient
 af[#af+1] = Def.Quad{
-	InitCommand=function(self) self:FullScreen():Center():diffusetopedge(Color.Black):diffusebottomedge(color("#061f4f")) end
+	InitCommand=function(self) self:FullScreen():Center():diffusetopedge(Color.Black):diffusebottomedge(color("#061f3f")) end,
+	-- StartSceneCommand=function(self) self:sleep(55):smooth(10):diffuse(0,0,0,0) end
 }
 
 for i=1,num_particles do

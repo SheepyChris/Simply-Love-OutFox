@@ -10,19 +10,24 @@ local sort_wheel = setmetatable({}, sick_wheel_mt)
 local sortmenu_input = LoadActor("SortMenu_InputHandler.lua", sort_wheel)
 local testinput_input = LoadActor("TestInput_InputHandler.lua")
 
--- WheelItemMT is a generic definition of an choice within the SortMenu
--- "mt" is my personal means of denoting that it (the file, the variable, whatever)
+-- "MT" is my personal means of denoting that this thing (the file, the variable, whatever)
 -- has something to do with a Lua metatable.
 --
--- metatables in Lua are a useful construct when designing reusable components,
--- but many online tutorials and guides are incredibly obtuse and unhelpful
--- for non-computer-science people (like me). https://lua.org/pil/13.html is just frustratingly scant.
+-- metatables in Lua are a useful construct when designing reusable components.
+-- For example, I'm using them here to define a generic definition of any choice within the SortMenu.
+-- The file WheelItemMT.lua contains a metatable definition; the "MT" is my own personal convention
+-- in Simply Love.
+--
+-- Unfortunately, many online tutorials and guides on Lua metatables are
+-- *incredibly* obtuse and unhelpful for non-computer-science people (like me).
+-- https://lua.org/pil/13.html is just frustratingly scant.
 --
 -- http://phrogz.net/lua/LearningLua_ValuesAndMetatables.html is less bad than most.
--- I get immediately lost in the criss-crossing diagrams, and I'll continue to
--- argue that naming things foo, bar, and baz abstract programming tutorials right
--- out of practical reality, but I found its prose to be practical, applicable, and concise,
--- so I guess I'll recommend that tutorial until I find a more helpful one.
+-- I do get immediately lost in the criss-crossing diagrams, and I'll continue to
+-- argue that naming things foo, bar, and baz "because we want to teach an idea, not a skill"
+-- results in programming tutorials so abstract they don't seem applicable to this world,
+-- but its prose was approachable enough for wastes-of-space like me, so I guess I'll
+-- recommend it until I find a more helpful one.
 local wheel_item_mt = LoadActor("WheelItemMT.lua")
 
 local sortmenu = { w=210, h=160 }
@@ -138,17 +143,20 @@ local t = Def.ActorFrame {
 		if not (PREFSMAN:GetPreference("Premium") == "Premium_Off" and GAMESTATE:GetCoinMode() == "CoinMode_Pay") then
 
 			if style == "single" then
+				table.insert(wheel_options, {"ChangeStyle", "Double"})
 				if ThemePrefs.Get("AllowDanceSolo") then
 					table.insert(wheel_options, {"ChangeStyle", "Solo"})
 				end
 
-				table.insert(wheel_options, {"ChangeStyle", "Double"})
-
 			elseif style == "double" then
 				table.insert(wheel_options, {"ChangeStyle", "Single"})
+				if ThemePrefs.Get("AllowDanceSolo") then
+					table.insert(wheel_options, {"ChangeStyle", "Solo"})
+				end
 
 			elseif style == "solo" then
 				table.insert(wheel_options, {"ChangeStyle", "Single"})
+				table.insert(wheel_options, {"ChangeStyle", "Double"})
 
 			-- Routine is not ready for use yet, but it might be soon.
 			-- This can be uncommented at that time to allow switching from versus into routine.

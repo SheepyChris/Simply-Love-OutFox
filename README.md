@@ -1,4 +1,4 @@
-# Simply Love (StepMania 5.x)
+# Simply Love (StepMania 5)
 
 ![Arrow Logo](https://i.imgur.com/oZmxyGo.png)
 
@@ -20,7 +20,7 @@ Simply Love is compatible with current releases from the official StepMania proj
 **Compatible Releases**<br>
 ✅ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)<br>
 ✅ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)<br>
-✅ [Project OutFox 5.3 Alpha 4.8.5 or newer](https://projectmoon.dance/downloads)<br>
+✅ [Project OutFox 5.3 Alpha 4.9.0 or newer](https://projectmoon.dance/downloads)<br>
 
 If you are able to compile StepMania's source code yourself, the [5_1-new branch](https://github.com/stepmania/stepmania/tree/5_1-new/) is supported.  The wiki has [instructions for compiling](https://github.com/stepmania/stepmania/wiki/Compiling-StepMania).
 
@@ -81,43 +81,57 @@ The aspect ratio can be changed under *Graphics / Sound Options*.
 Visit my imgur album for more screenshots: [http://imgur.com/a/56wDq](http://imgur.com/a/56wDq)
 
 
-## Features
-
-Refer to the [Features README](./Other/Documentation/Features-README.md) for a basic list of features and screenshots.
-
 ---
 
-## FAQ
+# Guides
 
-#### How can I get more songs to show up in Casual Mode?
+### Installing Simply Love
 
-Please refer to the [Casual Mode README](./Other/Documentation/CasualMode-README.md).
+[Installing Simply Love](./Other/Documentation/InstallingSimplyLove-README.md)
 
-#### I'm getting an error when I try to install StepMania.
+### Profile Avatars
 
-Refer to the [Troubleshooting StepMania](./Other/Documentation/TroubleshootingStepMania-README.md) guide included with Simply Love.
+[Profile Avatars](./Other/Documentation/ProfileAvatars-README.md)
 
-#### How can I load custom songs from USB sticks?
+### Player Options Menu
 
-First, configure your PC for USB profiles.  Follow the guides for [Windows](https://github.com/stepmania/stepmania/wiki/Static-Mount-Points-for-USB-Profiles-(Windows)) or [Linux](https://github.com/stepmania/stepmania/wiki/Creating-Static-Mount-Points-For-USB-Profiles-%28Linux%29).
+Guide by Rob Nichols:
+[Player Options Menu](https://robnicholsgames.com/2020/04/13/how-to-setup-stepmania-for-modern-dance-gaming/#menus)
 
-If you are using [SM5.1-beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) and have followed the guides linked above, you can use the [USB Profile Options menu](https://i.imgur.com/ZgU9HGw.png) in Simply Love to configure settings for custom songs.
+### Custom Songs from USB
 
-Note that support for loading custom songs from USB profiles is new to StepMania 5.1.  It is not available in StepMania 5.0.12 and older.
+[Custom Songs from USB](./Other/Documentation/CustomSongsFromUSB-README.md)
+
+### Casual Mode
+
+<p>Casual Mode was designed with public arcade machines and casual players in mind. Learn more here:</p>
+
+[Casual Mode](./Other/Documentation/CasualMode-README.md)
+
+### Tips for installing StepMania
+
+[Troubleshooting StepMania](./Other/Documentation/TroubleshootingStepMania-README.md)
 
 
-#### Why does my timing graph look weird?
+## Hardware Guides
 
-If your judgment distribution graph on Screen Evaluation has multiple individual "spikes" like Cloud Strife's hair in FFVII, your dance pad hardware is polling at a low rate.
+### Buying a 4-Panel Dance Pad
 
-![spiky boi](https://i.imgur.com/ay1G6rml.png)
+*Dom ITG* has an excellent summary of 4-panel dance pad available in 2020:<br/>
+https://www.youtube.com/watch?v=sEWj2_BNG_0
 
-Fixing this is outside the scope of Simply Love as a StepMania theme.  You may need to install drivers for your OS, modify hardware inside your dance pad, or both.
+### USB Polling Issues
 
-StarlightLumi wrote a guide for modifying L-Tek Dance Pads to poll at 1000 Hz:<br/>https://www.instructables.com/id/Modifying-an-L-tek-Dance-Pad-to-Poll-at-1000hz-on-/
+[USB Polling Issues](./Other/Documentation/USBPollingIssues-README.md)
 
-StarlightLumi's L-TEK guide was based on original code and efforts by [natano](https://github.com/natano):<br/>https://www.natano.net/blog/2019-12-14-usb-polling-adventure/
+### Linux for a Dedicated SM5 PC
 
-[sahunt](https://github.com/sahunt) has a guide on modifying Windows to poll at 1000 Hz:<br/>https://www.hackmycab.com/?portfolio=usb-polling
+<p>
+  din maintains a Linux image for running SM5 on common arcade hardware:<br/>
+  https://dinsfire.com/itgimage
+</p>
 
-geefr has a wiki page on identifying and troubleshooting USB polling issues in Linux:<br/>https://github.com/geefr/stepmania-linux-goodies/wiki/So-You-Think-You-Have-Polling-Issues
+<p>
+  It streamlines the setup process for those who have arcade hardware and
+  want to start playing as quickly as possible.
+</p>

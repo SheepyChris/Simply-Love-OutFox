@@ -4,8 +4,6 @@ local frame_x = args[1].x
 local pads = args[1].pads
 local choice_index = args[2]
 
-local DrawNinePanelPad = LoadActor("./pad.lua")
-
 -- -----------------------------------------------------------------------
 
 local af = Def.ActorFrame{
@@ -19,13 +17,13 @@ local af = Def.ActorFrame{
 
 		self:zoom(0.5):xy( frame_x, _screen.cy + WideScale(0,10) )
 
-		if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
+		if ThemePrefs.Get("VisualStyle")=="Gay" and not HolidayCheer() then
 			self:bob():effectmagnitude(0,0,0):effectclock('bgm'):effectperiod(0.666)
 		end
 	end,
 	GainFocusCommand=function(self)
 		self:finishtweening():linear(0.125):zoom(1)
-		if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
+		if ThemePrefs.Get("VisualStyle")=="Gay" and not HolidayCheer() then
 			self:effectmagnitude(0,4,0)
 		end
 	end,
@@ -54,16 +52,16 @@ local af = Def.ActorFrame{
 		InitCommand=function(self)
 			self:shadowlength(1):y(37):zoom(0.5)
 		end,
-		GainFocusCommand=function(self) if ThemePrefs.Get("VisualTheme")=="Gay" then self:rainbowscroll(true) end end,
-		LoseFocusCommand=function(self) if ThemePrefs.Get("VisualTheme")=="Gay" then self:rainbowscroll(false) end end,
+		GainFocusCommand=function(self) if ThemePrefs.Get("VisualStyle")=="Gay" then self:rainbowscroll(true) end end,
+		LoseFocusCommand=function(self) if ThemePrefs.Get("VisualStyle")=="Gay" then self:rainbowscroll(false) end end,
 	}
 }
 
 -- draw as many pads as needed for this choice
-for pad in ivalues(pads) do
-	af[#af+1] = DrawNinePanelPad(pad.color, {0.2,0.2,0.2,1})..{
+for i, pad in ipairs(pads) do
+	af[#af+1] = LoadActor("./pad.lua", {pad.color, {0.2,0.2,0.2,1}, i, choiceName})..{
 		InitCommand=function(self)
-			self:x(pad.offset):playcommand("Set", {style=choiceName})
+			self:x(pad.offset):playcommand("Set")
 		end,
 	}
 end

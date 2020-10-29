@@ -1,13 +1,14 @@
 -- love letters
 
-local delay = 0.0735
 local filename = "28.txt"
-local body = "The heavy snowfall today consumes the sounds, sights, and feelings that would otherwise cue spring's anticipated approach.  With the snow comes peace in the middle of the night during a long walk to nowhere, but I have walked alone so many times this winter.  It is spring that carries the hope of something new.\n\nGazing out my ice-crusted window into the remote distance, far beyond the confines of this apartment, or this city, or my mind, I wished to convey that my thoughts are with you, that I am with you.  That is to say:\n\nToday I love you as I love standing still amidst a silent snowfall until my hair is white and I appear old.\n\nTomorrow I love you as I love the anticipation of warm breezes gently kissing the skin of my arms.\n\nI love you as I love a month's worth of love letters.\n\nThank you for being my friend.\n\nBen"
+local body = "The heavy snowfall today consumes the sounds, sights,\nand feelings that would otherwise cue spring's approach.\nWith snow there is peace in the middle of the night\nduring a long walk to nowhere, but I have walked alone\nso many times this winter.  Spring carries the hope of\nsomething new.\n\nGazing out my ice-crusted window into the remote distance,\nfar beyond the confines of this apartment, or this city,\nor my mind, I wished to convey that my thoughts are with you,\nthat I am with you.  That is to say:\n\nToday I love you as I love standing still amidst a silent\nsnowfall until my hair is white and I appear old.\n\nTomorrow I love you as I love the anticipation of warm\nbreezes gently kissing the skin of my arms.\n\nI love you as I love a month's worth of love letters.\n\nThank you for being my friend.\n\nBen"
+local song_duration = 64
+local delay = song_duration / body:len()
 
 local bgm_volume = 10
 
 -- references to actors
-local bmt, tildes, cursor
+local bmt, tildes, cursor, _room
 
 -- properties of the monaco font
 local char_width = 12
@@ -56,9 +57,10 @@ local af = Def.ActorFrame{
 				if not done then
 					self:queuecommand("StopAudio")
 					self:GetParent():GetChild("Proceed"):stoptweening():queuecommand("Ch4Sc3Hide")
+					_room:finishtweening()
+					self:queuecommand("FadeMonitor"):sleep(7):queuecommand("FadeTerminal")
 					bmt:settext( "vim ./" .. filename ):sleep(2):queuecommand("CD")
-					cursor:xy( (bmt:GetText():len()+1)*char_width*font_zoom, char_width*font_zoom )
-						:queuecommand("Show"):sleep(2):queuecommand("Reset")
+					cursor:xy( (bmt:GetText():len()+1)*char_width*font_zoom, char_width*font_zoom ):queuecommand("Show"):sleep(2):queuecommand("Reset")
 				else
 					self:GetParent():queuecommand("TransitionScene")
 				end
@@ -84,31 +86,42 @@ af[#af+1] = LoadActor("./love-letters.ogg")..{
 -- "heavy snowfall today"
 af[#af+1] = LoadActor("./snow.lua")
 
+local room = Def.ActorFrame{}
+room.InitCommand=function(self) _room = self end
+room.StartSceneCommand=function(self) self:sleep(40):smooth(10):diffuse(0,0,0,0) end
+
 -- "my ice-crusted window"
-af[#af+1] = LoadActor("./frost.png")..{
-	InitCommand=function(self) self:xy(_screen.cx,0):zoomto(_screen.w, _screen.h-30):valign(0) end,
+room[#room+1] = LoadActor("./frost.png")..{
+	InitCommand=function(self) self:xy(_screen.cx,0):zoomto(_screen.w, _screen.h-30):valign(0):diffusealpha(0.5):diffuseshift():effectperiod(7):effectcolor1(0.5,0.5,0.5,1):effectcolor2(1,1,1,1) end,
+}
+room[#room+1] = LoadActor("./wind.png")..{
+	InitCommand=function(self) self:xy(_screen.cx,0):zoomto(_screen.w, _screen.h):valign(0):diffuseshift():effectperiod(5):effectcolor1(1,1,1,0.4):effectcolor2(0.4,0.4,0.4,0.8) end,
 }
 
 -- blinds
-af[#af+1] = LoadActor("./blind.png")..{
-	InitCommand=function(self) self:xy(_screen.cx, _screen.cy-100):zoomtoheight(_screen.h-40):zoomtowidth(_screen.w):customtexturerect(0,0,1,12) end,
+room[#room+1] = LoadActor("./blind.png")..{
+	InitCommand=function(self) self:xy(_screen.cx, _screen.cy-100):zoomtoheight(_screen.h-40):zoomtowidth(_screen.w):customtexturerect(0,0,1,12):diffuse(0.8,0.8,0.8,1) end,
 }
 -- blind strings - left
-af[#af+1] = Def.Quad{
+room[#room+1] = Def.Quad{
 	InitCommand=function(self) self:xy(30, 0):valign(0):zoomto(2, _screen.h-120):diffuse(color("#6a6664")) end
 }
 -- blind strings - right
-af[#af+1] = Def.Quad{
+room[#room+1] = Def.Quad{
 	InitCommand=function(self) self:xy(_screen.w-30, 0):valign(0):zoomto(2, _screen.h-120):diffuse(color("#6a6664")) end
 }
 
 -- desk
-af[#af+1] = Def.Quad{
+room[#room+1] = Def.Quad{
 	InitCommand=function(self) self:xy(_screen.cx, _screen.h):valign(1):zoomto(_screen.w, 30):diffuse(0.05,0.05,0.05,1):diffusetopedge(0.085,0.075,0.1,1) end
 }
 
+af[#af+1] = room
+
 -- monitor
 af[#af+1] = Def.ActorFrame{
+	InitCommand=function(self) monitor = self end,
+	FadeMonitorCommand=function(self) self:smooth(3):diffuse(0,0,0,0) end,
 
 	-- stand
 	Def.Quad{
@@ -132,13 +145,22 @@ af[#af+1] = Def.ActorFrame{
 	LoadActor("./space.png")..{
 		InitCommand=function(self) self:zoomto(monitor.w-24, monitor.h-24):Center() end,
 	},
+}
 
-	--  terminal window
+
+--  terminal window
+af[#af+1] = Def.ActorFrame{
+	InitCommand=function(self) self:xy(terminal.x, terminal.y) end,
+
 	Def.ActorFrame{
-		InitCommand=function(self) self:xy(terminal.x, terminal.y) end,
+		FadeTerminalCommand=function(self)
+			cursor:smooth(6):zoomto(2.5,30)
+			self:smooth(2.5):diffuse(0,0,0,0)
+		end,
 
 		Def.Quad{
-			InitCommand=function(self) self:align(0,0):zoomto(terminal.w+terminal.padding, terminal.h):diffuse(0,0,0,0.75) end
+			InitCommand=function(self) self:align(0,0):zoomto(terminal.w+terminal.padding, terminal.h):diffuse(0,0,0,0.75) end,
+			FadeMonitorCommand=function(self) self:smooth(2):diffuse(0,0,0,1) end
 		},
 
 		-- dragbar texture
@@ -161,6 +183,7 @@ af[#af+1] = Def.ActorFrame{
 			Texture=THEME:GetPathB("ScreenHereInTheDarkness", "overlay/14/circle.png"),
 			InitCommand=function(self) self:zoomto(dragbar.h-4,dragbar.h-4):diffuse(color("#34c84a")):x((dragbar.h-2)*3):halign(1) end
 		},
+
 
 		-- main text
 		Def.BitmapText{
@@ -255,24 +278,25 @@ af[#af+1] = Def.ActorFrame{
 				self:settext( self:GetText():sub(1, self:GetText():len()-2 ) )
 			end
 		},
+	},
 
-		-- cursor
-		Def.Quad{
-			InitCommand=function(self)
-				cursor = self
-				self:align(0,0):xy(char_width*font_zoom+2, (CountNewlines(bmt:GetText())+1)*char_width):zoomto(1,15)
-					:diffuseblink():effectperiod(1):effectcolor1(0,0,0,1):effectcolor2(0.9,0.9,0.9,1)
-					:visible(true)
-			end,
-			ResetCommand=function(self) self:xy(char_width*font_zoom, (CountNewlines(bmt:GetText())+1)*char_width + char_width/2) end,
-			MoveCommand=function(self)
-				self:y( bmt:GetHeight()*font_zoom )
-				self:addx( char_width*font_zoom)
-			end,
-			ShowCommand=function(self) self:visible( true ) end,
-			HideCommand=function(self) self:visible( false ) end
-		},
-	}
+	-- cursor
+	Def.Quad{
+		InitCommand=function(self)
+			cursor = self
+			self:align(0,0):xy(char_width*font_zoom+2, (CountNewlines(bmt:GetText())+1)*char_width):zoomto(1.333,15)
+			self:diffuseblink():effectperiod(1):effectcolor1(0,0,0,0):effectcolor2(0.9,0.9,0.9,1)
+			self:visible(true)
+		end,
+		ResetCommand=function(self) self:xy(char_width*font_zoom, (CountNewlines(bmt:GetText())+1)*char_width + char_width/2) end,
+		MoveCommand=function(self)
+			self:y( bmt:GetHeight()*font_zoom )
+			self:addx( char_width*font_zoom)
+			self:zoomto(1.333,15)
+		end,
+		ShowCommand=function(self) self:visible( true ) end,
+		HideCommand=function(self) self:visible( false ) end
+	},
 }
 
 

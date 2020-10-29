@@ -1,3 +1,11 @@
+-- - - - - - - - - - - - - - - - - - - - -
+-- first, reset the global SL table to default values
+-- this is defined in:  ./Scripts/SL_Init.lua
+InitializeSimplyLove()
+
+-- - - - - - - - - - - - - - - - - - - - -
+-- okay, now we can move on to normal actor definitions
+
 local TextColor = (ThemePrefs.Get("RainbowMode") and (not HolidayCheer()) and Color.Black) or Color.White
 
 -- generate a string like "7741 songs in 69 groups, 10 courses"
@@ -9,12 +17,6 @@ local SongStats = ("%i %s %i %s, %i %s"):format(
 	#SONGMAN:GetAllCourses(PREFSMAN:GetPreference("AutogenGroupCourses")),
 	THEME:GetString("ScreenTitleMenu", "courses")
 )
-
--- - - - - - - - - - - - - - - - - - - - -
-local game = GAMESTATE:GetCurrentGame():GetName();
-if game ~= "dance" and game ~= "pump" then
-	game = "techno"
-end
 
 -- - - - - - - - - - - - - - - - - - - - -
 -- People commonly have multiple copies of SL installed – sometimes different forks with unique features
@@ -48,46 +50,37 @@ if ProductVersion():find("git") then
 	sm_version = ("%s, Built %s %s %s"):format(sm_version, day, month, year)
 end
 
--- - - - - - - - - - - - - - - - - - - - -
-local style = ThemePrefs.Get("VisualTheme")
-local image = "TitleMenu"
 
--- see: watch?v=wxBO6KX9qTA etc.
-if FILEMAN:DoesFileExist("/Themes/"..sl_name.."/Graphics/_VisualStyles/"..ThemePrefs.Get("VisualTheme").."/TitleMenuAlt (doubleres).png") then
-	if math.random(1,100) <= 10 then image="TitleMenuAlt" end
+-- -----------------------------------------------------------------------
+-- preliminary Lua setup is done
+-- now define actors to be passed back to the SM engine
+
+local af = Def.ActorFrame{}
+af.InitCommand=function(self) self:Center() end
+
+
+if IsSpooky() then
+	af[#af+1] = LoadActor("./Spooky.lua")
 end
 
-local af = Def.ActorFrame{
-	InitCommand=function(self)
-		--see: ./Scripts/SL_Init.lua
-		InitializeSimplyLove()
+-- -----------------------------------------------------------------------
+-- af2 contains things that should fade out during the OffCommand
+local af2 = Def.ActorFrame{}
+af2.OffCommand=function(self) self:smooth(0.65):diffusealpha(0) end
 
-		self:Center()
-	end,
-	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
-}
 
--- decorative arrows
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
-	InitCommand=function(self)
-		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
-	end
-}
-
--- SIMPLY [something]
-af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
-	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
-}
+-- the big blocky Wendy text that says SIMPLY LOVE (or SIMPLY THONK, or SIMPLY DUCKS, etc.)
+-- and the arrows graphic that appears between the two words
+af2[#af2+1] = LoadActor("./SimplySomething.lua")
 
 -- SM version, SL version, song stats
-af[#af+1] = Def.ActorFrame{
+af2[#af2+1] = Def.ActorFrame{
 	InitCommand=function(self) self:zoom(0.8):y(-120):diffusealpha(0) end,
 	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 
 	LoadFont("Common Normal")..{
-		Text=sm_version .. "       " .. sl_name .. (sl_version and (" v" .. sl_version) or ""),
-		InitCommand=function(self) self:y(-20):diffuse(TextColor) end,
+		Text=sl_name .. (sl_version and (" v" .. sl_version) or "") .. "\n" .. sm_version,
+		InitCommand=function(self) self:y(-36):diffuse(TextColor) end,
 	},
 	LoadFont("Common Normal")..{
 		Text=SongStats,
@@ -95,13 +88,23 @@ af[#af+1] = Def.ActorFrame{
 	}
 }
 
+-- "The chills, I have them down my spine."
+if IsSpooky() then
+	af2[#af2+1] = LoadActor("./SpookyButFadeOut.lua")
+end
+
 -- the best way to spread holiday cheer is singing loud for all to hear
 if HolidayCheer() then
-	af[#af+1] = Def.Sprite{
+	af2[#af2+1] = Def.Sprite{
 		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
 		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
 		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
 	}
 end
+
+-- ensure that af2 is added as a child of af
+af[#af+1] = af2
+
+-- -----------------------------------------------------------------------
 
 return af
