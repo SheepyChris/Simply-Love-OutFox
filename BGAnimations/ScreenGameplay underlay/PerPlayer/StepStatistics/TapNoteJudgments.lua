@@ -67,7 +67,8 @@ for index, window in ipairs(TNS.Types) do
 				self:halign( PlayerNumber:Reverse()[OtherPlayer[player]] )
 			end
 
-			if SL.Global.ActiveModifiers.TimingWindows[index] or index==#TNS.Types then
+			if (SL.Global.ActiveModifiers.TimingWindows[index] or index==#TNS.Types) and not
+				(SL.Global.GameMode == "StomperZ" and index==5) then
 				self:diffuse( SL.JudgmentColors[SL.Global.GameMode][index] )
 				leadingZeroAttr = { Length=(digits-1), Diffuse=Brightness(self:GetDiffuse(), 0.35) }
 				self:AddAttribute(0, leadingZeroAttr )
