@@ -56,7 +56,7 @@ If you're using **SM5.1-beta**:
 </tbody>
 </table>
 
-Or, if you're using **Project OutFox 5.3**:
+Or, if you're using **StepMania 5.3**:
 <table>
 <tbody>
   <tr>
@@ -84,7 +84,7 @@ The next time you use StepMania, you can switch to Simply Love from the main opt
 
 The exact process can vary depending on your current theme, but this setting is usually in **Options → Display Options → Appearance Options → Theme**
 
-In case of Project OutFox 5.3 with the default Soundwaves theme, this setting is in **Options → User Experience  → Appearance Options → Theme**
+In case of StepMania 5.3 with the default Soundwaves theme, this setting is in **Options → User Experience  → Appearance Options → Theme**
 
 ---
 
