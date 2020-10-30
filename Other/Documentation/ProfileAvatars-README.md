@@ -31,7 +31,7 @@ If you're using **SM5.0.12**:
 </tbody>
 </table>
 
-Or, if you're using **SM5.1-beta**:
+If you're using **SM5.1-beta**:
 
 <table>
 <tbody>
@@ -46,6 +46,25 @@ Or, if you're using **SM5.1-beta**:
   <tr>
     <td>Linux</td>
     <td>/home/<code>USERNAME</code>/.stepmania-5.1/Save/LocalProfiles/<code>profileID</code>/Avatar.png</td>
+  </tr>
+</tbody>
+</table>
+
+Or, if you're using **StepMania 5.3**:
+
+<table>
+<tbody>
+  <tr>
+    <td>Windows 10, Windows 7</td>
+    <td>C:\Games\StepMania 5.3 OutFox\Save\LocalProfiles\<code>profileID</code>\Avatar.png (default installation path)</td>
+  </tr>
+  <tr>
+    <td>macOS</td>
+    <td>/Users/<code>USERNAME</code>/Library/Preferences/StepMania 5.3 OutFox/LocalProfiles/<code>profileID</code>/Avatar.png</td>
+  </tr>
+  <tr>
+    <td>Linux</td>
+    <td>/home/<code>USERNAME</code>/.stepmania-5.3/Save/LocalProfiles/<code>profileID</code>/Avatar.png</td>
   </tr>
 </tbody>
 </table>
