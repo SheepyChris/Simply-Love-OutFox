@@ -7,7 +7,7 @@
 
 Simply Love is a StepMania 5.x theme for the post-ITG community.
 
-It features a clean and simple design, offers numerous data-driven features, and allows the current generation of ITG fans to breathe new life into the game they've known for over a decade.
+It features a clean and simple design, offers numerous data-driven features not implemented by the StepMania 5 engine, and allows the current generation of ITG fans to breathe new life into the game they've known for over a decade.
 
 Simply Love was originally designed and implemented for a previous version of StepMania (SM3.95) by hurtpiggypig.  For more information on that version of Simply Love, check here:
 https://www.youtube.com/watch?v=OtcWy5m6-CQ
@@ -15,14 +15,14 @@ https://www.youtube.com/watch?v=OtcWy5m6-CQ
 
 ## Supported Versions of StepMania
 
-This Simply Love fork seeks to perform additional tweaks for compatibility and integrations with StepMania 5.3, however, it is also compatible with previous releases from the official StepMania project.
+This Simply Love fork seeks to perform additional tweaks for compatibility and integrations with StepMania 5.3. It may be also compatible with previous releases from the official StepMania project, but that's not a priority.
 
 **Compatible Releases**<br>
 ✅ [Project OutFox 5.3 Alpha 4.9.0 or newer](https://projectmoon.dance/downloads)<br>
-✅ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)<br>
-✅ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)<br>
+✅ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) (untested)<br>
+✅ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12) (untested)<br>
 
-If you are able to compile StepMania's source code yourself, the [5_1-new branch](https://github.com/stepmania/stepmania/tree/5_1-new/) is supported.  The wiki has [instructions for compiling](https://github.com/stepmania/stepmania/wiki/Compiling-StepMania).
+If you are able to compile StepMania's source code yourself, the [5_1-new branch](https://github.com/stepmania/stepmania/tree/5_1-new/) may be supported.  The wiki has [instructions for compiling](https://github.com/stepmania/stepmania/wiki/Compiling-StepMania).
 
 
 **Incompatible**<br>
