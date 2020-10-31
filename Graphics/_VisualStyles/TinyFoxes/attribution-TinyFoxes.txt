@@ -1,0 +1,5 @@
+TinyFoxes is a community group focusing on add-ons and localizations for Project OutFox
+
+---
+
+You can find more about us at https://github.com/Tiny-Foxes
