@@ -49,6 +49,9 @@ t[#t+1] = LoadActor("./Shared/TitleAndBanner.lua")
 -- text to display BPM range (and ratemod if ~= 1.0) immediately under the banner
 t[#t+1] = LoadActor("./Shared/BPM_RateMod.lua")
 
+-- text to display timing and life difficulties under the banner
+t[#t+1] = LoadActor("./Shared/TimingAndLife.lua")
+
 -- store some attributes of this playthrough of this song in the global SL table
 -- for later retrieval on ScreenEvaluationSummary
 t[#t+1] = LoadActor("./Shared/GlobalStorage.lua")
