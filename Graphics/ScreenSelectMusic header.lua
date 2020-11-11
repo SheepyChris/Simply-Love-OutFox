@@ -16,7 +16,7 @@ local SecondsToHMMSS = SecondsToHMMSS or function(s)
 end
 
 local UpdateTimer = function(af, dt)
-	local seconds = GetTimeSinceStart() - SL.Global.TimeAtSessionStart
+	local seconds = GetTimeSinceStart() - GAMESTATE:Env()["TimeSinceStart"]
 
 	-- if this game session is less than 1 hour in duration so far
 	if seconds < 3600 then
@@ -42,8 +42,8 @@ if PREFSMAN:GetPreference("EventMode") then
 		-- TimeAtSessionStart will be reset to nil between game sessions
 		-- thus, if it's currently nil, we're loading ScreenSelectMusic
 		-- for the first time this particular game session
-		if SL.Global.TimeAtSessionStart == nil then
-			SL.Global.TimeAtSessionStart = GetTimeSinceStart()
+		if GAMESTATE:Env()["TimeSinceStart"] == nil then
+			GAMESTATE:Env()["TimeSinceStart"] = GetTimeSinceStart()
 		end
 
 		self:SetUpdateFunction( UpdateTimer )
