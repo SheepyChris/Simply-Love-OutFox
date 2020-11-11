@@ -35,7 +35,7 @@ local t = Def.ActorFrame{
 -- do "regular" TapNotes first
 local coloring = LoadModule("SL/SL.JudgmentColor.lua"):GetGameModeColor()
 local yscaleset = Length > 6 and scale( Length, 6, 11, 35, 18.5 ) or 35
-local zoomscale = Length > 6 and scale( Length, 6, 11, 1.15, 0.75 ) or 1.15
+local zoomscale = Length > 6 and scale( Length, 6, 11, 1.15, 0.75 ) or 1.2
 for i=1,#TapNoteScores.Types do
 	local window = TapNoteScores.Types[i]
 	local number = pss:GetTapNoteScores( "TapNoteScore_"..window )
@@ -86,7 +86,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 		Font="Wendy/_wendy white",
 		InitCommand=function(self) self:horizalign(right):Load("RollingNumbersEvaluationB") end,
 		BeginCommand=function(self)
-			self:y((index-1)*35 + 53)
+			self:y((index-1)*35 + 53):zoom(1.2)
 			self:x( RadarCategories.x[ToEnumShortString(side)] )
 			self:targetnumber(performance)
 		end
@@ -106,7 +106,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 	t[#t+1] = LoadFont("Wendy/_wendy white")..{
 		InitCommand=function(self) self:horizalign(right) end,
 		BeginCommand=function(self)
-			self:y((index-1)*35 + 53)
+			self:y((index-1)*35 + 53):zoom(1.2)
 			self:x( ((side == PLAYER_1) and -114) or 286 )
 			self:settext(("%03.0f"):format(possible))
 			local leadingZeroAttr = { Length=3-tonumber(tostring(possible):len()), Diffuse=color("#5A6166") }
