@@ -22,7 +22,7 @@
 -- SOFTWARE.
 --
 
-json = { _version = "0.1.2" }
+local json = { _version = "0.1.2" }
 
 -------------------------------------------------------------------------------
 -- Encode
@@ -374,7 +374,7 @@ local char_func_map = {
 }
 
 
-parse = function(str, idx)
+local parse = function(str, idx)
   local chr = str:sub(idx, idx)
   local f = char_func_map[chr]
   if f then
@@ -396,5 +396,4 @@ function json.decode(str)
   return res
 end
 
-
--- return json
+return json
