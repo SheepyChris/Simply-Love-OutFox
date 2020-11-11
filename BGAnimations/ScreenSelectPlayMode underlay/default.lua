@@ -8,7 +8,7 @@ local cursor = {
 	h = 40,
 	index = 0,
 	-- the width of the cursor will be clamped to exist between these two values
-	min_w = 90, max_w = 170,
+	min_w = 90, max_w = 160,
 }
 
 local Update = function(af, delta)
@@ -140,12 +140,12 @@ local t = Def.ActorFrame{
 
 		Def.Quad{
 			InitCommand=function(self) self:zoomtoheight(cursor.h+2):diffuse(1,1,1,1):x(-1):halign(1) end,
-			UpdateCommand=function(self) self:zoomtowidth( clamp( choice_actors[cursor.index+1]:GetWidth()/1.4, cursor.min_w, cursor.max_w) ) end,
+			UpdateCommand=function(self) self:zoomtowidth( clamp( choice_actors[cursor.index+1]:GetZoomedWidth(), cursor.min_w, cursor.max_w) ) end,
 			OffCommand=function(self) self:sleep(0.4):linear(0.2):cropleft(1) end
 		},
 		Def.Quad{
 			InitCommand=function(self) self:zoomtoheight(cursor.h):diffuse(0,0,0,1):halign(1) end,
-			UpdateCommand=function(self) self:zoomtowidth( clamp(choice_actors[cursor.index+1]:GetWidth()/1.4, cursor.min_w, cursor.max_w) ) end,
+			UpdateCommand=function(self) self:zoomtowidth( clamp(choice_actors[cursor.index+1]:GetZoomedWidth(), cursor.min_w, cursor.max_w) ) end,
 			OffCommand=function(self) self:sleep(0.4):linear(0.2):cropleft(1) end
 		}
 	},
