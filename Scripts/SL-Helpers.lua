@@ -545,3 +545,18 @@ GetComboFonts = function()
 
 	return fonts
 end
+
+ReportMissingFeature = function( MissingFeature, Version, VDate )
+	local function GenDate(number)
+		local date = number and tostring(number) or VersionDate()
+		local year = date:sub(1,4)
+		local month = date:sub(5,6)
+		if month:sub(1,1) == "0" then month = month:gsub("0", "") end
+		month = THEME:GetString("Months", "Month"..month)
+		local day = date:sub(7,8)
+		return ("%s/%s/%s"):format(day, month, year)
+	end
+
+	local report = string.format( THEME:GetString("Common","MissingFeature"), MissingFeature, GenDate(), Version, GenDate( VDate ) )
+	SCREENMAN:SystemMessage( report )
+end

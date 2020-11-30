@@ -13,9 +13,19 @@ local sequential_offsets = SL[ToEnumShortString(player)].Stages.Stats[SL.Global.
 
 -- a table to store the AMV's vertices
 local verts= {}
+local missverts= {}
 -- TotalSeconds is used in scaling the x-coordinates of the AMV's vertices
 local FirstSecond = GAMESTATE:GetCurrentSong():GetFirstSecond()
 local TotalSeconds = GAMESTATE:GetCurrentSong():GetLastSecond()
+
+-- This check is the possibility that users haven't upgraded to OutFox Alpha 4.9.5, which introduces
+-- Points and Line modes, that improve perfomance quite significantly when rendering the scatterplot.
+local BuildDate = tonumber(VersionDate())
+local SupportsPointsAndLines = BuildDate >= 20201128
+
+if not SupportsPointsAndLines then
+	ReportMissingFeature( THEME:GetString("MissingFeature","PointsLines"), "4.9.5", 20201128 )
+end
 
 -- variables that will be used and re-used in the loop while calculating the AMV's vertices
 local Offset, CurrentSecond, TimingWindow, x, y, c, r, g, b
@@ -73,15 +83,10 @@ for t in ivalues(sequential_offsets) do
 		-- insert four datapoints into the verts tables, effectively generating a single quadrilateral
 		-- top left,  top right,  bottom right,  bottom left
 		table.insert( verts, {{x,y,0}, {r,g,b,0.666}} )
-		table.insert( verts, {{x+1.5,y,0}, {r,g,b,0.666}} )
-		table.insert( verts, {{x+1.5,y+1.5,0}, {r,g,b,0.666}} )
-		table.insert( verts, {{x,y+1.5,0}, {r,g,b,0.666}} )
 	else
 		-- else, a miss should be a quadrilateral that is the height of the entire graph and red
-		table.insert( verts, {{x, 0, 0}, color("#ff000077")} )
-		table.insert( verts, {{x+1, 0, 0}, color("#ff000077")} )
-		table.insert( verts, {{x+1, GraphHeight, 0}, color("#ff000077")} )
-		table.insert( verts, {{x, GraphHeight, 0}, color("#ff000077")} )
+		table.insert( missverts, {{x, 0, 0}, color("#ff000077")} )
+		table.insert( missverts, {{x, GraphHeight, 0}, color("#ff000077")} )
 	end
 end
 
@@ -91,9 +96,21 @@ end
 local amv = Def.ActorMultiVertex{
 	InitCommand=function(self) self:x(-GraphWidth/2) end,
 	OnCommand=function(self)
-		self:SetDrawState({Mode="DrawMode_Quads"})
-			:SetVertices(verts)
+		if SupportsPointsAndLines then
+			self:SetDrawState({Mode="DrawMode_Points"})
+			:SetVertices(verts):SetPointState(true)
+		end
 	end,
 }
 
-return amv
+local missamv = Def.ActorMultiVertex{
+	InitCommand=function(self) self:x(-GraphWidth/2) end,
+	OnCommand=function(self)
+		if SupportsPointsAndLines then
+			self:SetDrawState({Mode="DrawMode_Lines"})
+			:SetVertices(missverts)
+		end
+	end,
+}
+
+return Def.ActorFrame{amv,missamv}
