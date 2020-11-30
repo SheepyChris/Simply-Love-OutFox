@@ -9,12 +9,11 @@ af[#af+1] = Def.Sprite{
 				local path = GetAvatarPath(profile.dir, profile.displayname)
 
 				if path then
-					self:Load(path)
-					textures[profile.index] = self:GetTexture()
+					textures[profile.index] = path
 				end
 			end
 		end
-		self:visible(false):hibernate(math.huge)
+		self:visible(false)
 	end
 }
 
