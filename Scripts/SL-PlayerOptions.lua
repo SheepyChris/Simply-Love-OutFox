@@ -522,6 +522,35 @@ local Overrides = {
 	ReceptorArrowsPosition = {
 		Choices = { "StomperZ", "ITG" },
 	},
+	DArrowPos = {
+		Choices = function() return range(-25, 25, 1) end,
+		Values = function() return range(-25, 25, 1) end,
+		LoadSelections = function(self, list, pn)
+			local ypos = SL[ToEnumShortString(pn)].DArrowPos
+			local choices = self.Choices
+			for i=1,#list do
+				if( ypos == choices[i] ) then
+					list[i] = true
+					return 
+				end
+			end
+			list[51] = true
+			return
+		end,
+		NotifyOfSelection= function(self, pn, choice)
+			MESSAGEMAN:Broadcast("UpdateNoteFieldPreview",{Player = pn, Val = self.Choices[choice]})
+		end,
+		SaveSelections = function(self,list,pn)
+			if not list then return end
+
+			for i=1,#list do
+				if list[i] then
+					SL[ToEnumShortString(pn)].DArrowPos = self.Choices[i]
+					return
+				end
+			end
+		end,
+	},
 	-------------------------------------------------------------------------
 	LifeMeterType = {
 		Values = { "Standard", "Surround", "Vertical" },
@@ -624,6 +653,7 @@ local OptionRowDefault = {
 			self.SelectType = Overrides[name].SelectType or "SelectOne"
 			self.OneChoiceForAllPlayers = Overrides[name].OneChoiceForAllPlayers or false
 			self.ExportOnChange = Overrides[name].ExportOnChange or false
+			self.NotifyOfSelection = Overrides[name].NotifyOfSelection or function() end
 
 
 			if self.SelectType == "SelectOne" then

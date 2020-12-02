@@ -1,5 +1,36 @@
 local af = Def.ActorFrame{}
 
+local originalpos = SCREEN_CENTER_Y + THEME:GetMetric("Player","ReceptorArrowsYStandard")
+
+for pn in ivalues( GAMESTATE:GetHumanPlayers() ) do
+	local a = Def.ActorFrame{
+		InitCommand=function(self)
+			self:xy( _screen.cx - (clamp(_screen.w, 640, 854) * 0.25) * (pn == PLAYER_1 and 1 or -1), originalpos )
+			:diffusealpha(0)
+		end,
+		UpdateNoteFieldPreviewMessageCommand=function(self,param)
+			if param.Player == pn then
+				self:stoptweening():y( originalpos + param.Val ):diffusealpha(1)
+				:sleep(1):linear(1):diffusealpha(0)
+			end
+		end,
+	}
+
+	for i=1,GAMESTATE:GetCurrentStyle():ColumnsPerPlayer() do
+		-- Check if the noteskin actually exists, otherwise warn, and use the first noteskin
+		-- available on the array.
+		local tcol = GAMESTATE:GetCurrentStyle():GetColumnInfo( pn, i )
+		a[#a+1] = Def.ActorFrame{
+			InitCommand=function(self)
+				self:x( tcol["XOffset"] )
+			end,
+			NOTESKIN:LoadActorForNoteSkin( tcol["Name"], "Receptor", SL[ToEnumShortString(pn)].ActiveModifiers.NoteSkin )
+		}
+	end
+
+	af[#af+1] = a
+end
+
 -- this is broadcast from [OptionRow] TitleGainFocusCommand in metrics.ini
 -- we use it to color the active OptionRow's title appropriately by PlayerColor()
 af.OptionRowChangedMessageCommand=function(self, params)

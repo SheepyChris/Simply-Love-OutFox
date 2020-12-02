@@ -31,6 +31,7 @@ local PlayerDefaults = {
 				ActionOnMissedTarget = "Nothing",
 				Pacemaker = false,
 				ReceptorArrowsPosition = "StomperZ",
+				DArrowPos = 0,
 				LifeMeterType = "Standard",
 				MissBecauseHeld = false,
 				NPSGraphAtTop = false,

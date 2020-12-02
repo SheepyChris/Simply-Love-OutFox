@@ -1,6 +1,6 @@
 -- ReceptorArrow positions are hardcoded using Metrics.ini in Casual, ITG,
 -- and FA+ modes.  If we're in one of those modes, bail now.
-if SL.Global.GameMode ~= "StomperZ" then return end
+-- if SL.Global.GameMode ~= "StomperZ" then return end
 
 local player = ...
 
@@ -27,10 +27,11 @@ return Def.Actor{
 
 		local scroll = playeroptions:UsingReverse() and "Reverse" or "Standard"
 		local position = SL[p].ActiveModifiers.ReceptorArrowsPosition
+		local additionalpos = SL[p].DArrowPos
 
 		-- The player's ActorFrame ("PlayerP1" or "PlayerP2") contains multiple important
 		-- things like NoteField, Judgment, HoldJudgment, etc.  Shift the entire
 		-- ActorFrame up/down, rather than trying to position its children individually.
-		topscreen:GetChild('Player'..p):addy( ReceptorPositions[scroll][position] )
+		topscreen:GetChild('Player'..p):addy( ReceptorPositions[scroll][position] + additionalpos )
 	end
 }
