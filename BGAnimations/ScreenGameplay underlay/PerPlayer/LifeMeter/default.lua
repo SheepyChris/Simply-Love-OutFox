@@ -1,5 +1,7 @@
 local player = ...
 if SL[ToEnumShortString(player)].ActiveModifiers.HideLifebar then return end
+local screenname = Var "LoadingScreen"
+if screenname == "ScreenGameplaySyncMachine" then return end
 
 local lifemeter_actor
 

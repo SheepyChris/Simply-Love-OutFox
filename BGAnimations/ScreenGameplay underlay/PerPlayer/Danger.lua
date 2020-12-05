@@ -1,6 +1,8 @@
 -- there aren't meaningful life delta values in Casual and StomperZ doesn't it
 -- so these danger/fail flashes should never be possible there
 if SL.Global.GameMode == "Casual" or SL.Global.GameMode == "StomperZ" then return end
+local screenname = Var "LoadingScreen"
+if screenname == "ScreenGameplaySyncMachine" then return end
 
 -- ------------------------------------------------------------------
 

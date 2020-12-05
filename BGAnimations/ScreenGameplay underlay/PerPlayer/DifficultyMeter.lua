@@ -1,5 +1,8 @@
 local player = ...
 
+local screenname = Var "LoadingScreen"
+if screenname == "ScreenGameplaySyncMachine" then return end
+
 local _x = _screen.cx + (player==PLAYER_1 and -1 or 1) * SL_WideScale(292.5, 342.5)
 
 return Def.ActorFrame{
