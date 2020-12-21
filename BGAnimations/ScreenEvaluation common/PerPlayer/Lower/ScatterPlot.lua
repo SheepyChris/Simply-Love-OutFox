@@ -98,7 +98,7 @@ local amv = Def.ActorMultiVertex{
 	OnCommand=function(self)
 		if SupportsPointsAndLines then
 			self:SetDrawState({Mode="DrawMode_Points"})
-			:SetVertices(verts):SetPointState(true)
+			:SetVertices(verts):SetPointState(true):SetPointSize(3)
 		end
 	end,
 }
