@@ -108,8 +108,4 @@ t[#t+1] = Def.ActorFrame{
     },
 }
 
-t[#t+1] = LoadActor( "ComboGraph.lua", { Player = Player, Width = width, Height = 20 } )..{
-    InitCommand=function(self) self:y( 10 ) end
-}
-
 return t
