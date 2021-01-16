@@ -88,24 +88,23 @@ t[#t+1] = Def.ActorFrame{
             scale( fMinLifeSoFar, 0, 1, 0, -height ) - 30
         )
     end,
+	OnCommand=function(self)
+        local endpos = self:GetY()
+		self:addy(-20):diffusealpha(0):sleep(2):accelerate(0.2):diffusealpha(1):y( endpos + 15 )
+		    :decelerate(0.2):y( endpos )
+		    :accelerate(0.2):y( endpos + 15 )
+	end,
 
-    Def.BitmapText{
-        Font="_Medium",
-        Text=THEME:GetString("GraphDisplay","Barely"),
-        OnCommand=function(self)
-            self:zoom(0.6):strokecolor(Color.Black):y(-12):diffusealpha(0)
-            :addy(-20):sleep(3.25):decelerate(0.2):diffusealpha(1):addy(20)
-        end
-    },
-    Def.BitmapText{
-        Text="&MENUDOWN;",
-        Font="_Medium",
-        OnCommand=function(self)
-            self:zoom(0.6):strokecolor(Color.Black):y(0):diffusealpha(0)
-            :bob():effectmagnitude(0,5,0)
-            :addy(-20):sleep(3.25):decelerate(0.2):diffusealpha(1):addy(30)
-        end
-    },
+	Def.BitmapText{
+        Font="Common Normal",
+		Text=THEME:GetString("GraphDisplay", "Barely"),
+		InitCommand=function(self) self:zoom(0.75) end,
+	},
+	Def.Sprite{
+        Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/PerPlayer/arrow.png"),
+		InitCommand=function(self) self:rotationz(90):zoom(0.5):y(10) end,
+		OnCommand=function(self) self:sleep(0.5):diffuseshift():effectcolor1(1,1,1,1):effectcolor2(1,1,1,0.2) end
+	}
 }
 
 return t
