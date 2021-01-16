@@ -38,31 +38,5 @@ return Def.ActorFrame{
 
 	LoadActor("./ScatterPlot.lua", {player=player, GraphWidth=GraphWidth, GraphHeight=GraphHeight} ),
 
-	-- The GraphDisplay provided by the engine provides us a solid color histogram detailing
-	-- the player's lifemeter during gameplay capped by a white line.
-	-- in normal gameplay (non-CourseMode), we hide the solid color but leave the white line.
-	-- in CourseMode, we hide the white line (for aesthetic reasons) and leave the solid color
-	-- as ScatterPlot.lua does not yet support CourseMode.
-	Def.GraphDisplay{
-		Name="GraphDisplay",
-		InitCommand=function(self)
-			self:vertalign(top)
-
-			local ColorIndex = ((SL.Global.ActiveColorIndex + (player==PLAYER_1 and -1 or 1)) % #SL.Colors) + 1
-			self:Load("GraphDisplay" .. ColorIndex )
-
-			local playerStageStats = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
-			local stageStats = STATSMAN:GetCurStageStats()
-			self:Set(stageStats, playerStageStats)
-
-			if GAMESTATE:IsCourseMode() then
-				-- hide the GraphDisplay's stroke ("Line")
-				self:GetChild("Line"):visible(false)
-			else
-			    -- hide the GraphDisplay's body (2nd unnamed child)
-			    self:GetChild("")[2]:visible(false)
-				 self:GetChild("Line"):addy(1)
-			end
-		end
-	},
+	LoadActor("./GraphDisplay.lua", { Pn = player, Width = GraphWidth, Height=GraphHeight/2 }),
 }
