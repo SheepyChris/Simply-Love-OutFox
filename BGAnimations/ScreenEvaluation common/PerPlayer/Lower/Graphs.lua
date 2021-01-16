@@ -38,5 +38,5 @@ return Def.ActorFrame{
 
 	LoadActor("./ScatterPlot.lua", {player=player, GraphWidth=GraphWidth, GraphHeight=GraphHeight} ),
 
-	LoadActor("./GraphDisplay.lua", { Pn = player, Width = GraphWidth, Height=GraphHeight/2 }),
+	LoadActor("./GraphDisplay.lua", { Pn = player, Width = GraphWidth, Height=GraphHeight }),
 }

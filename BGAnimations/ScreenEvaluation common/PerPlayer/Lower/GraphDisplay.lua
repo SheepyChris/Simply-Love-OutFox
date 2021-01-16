@@ -17,7 +17,7 @@ local LifeRecord = Stats:GetLifeRecord( LastSecond, SampleAmmount )
 
 local t = Def.ActorFrame{
     OnCommand=function(self)
-        self:y( height*2 )
+        self:y( height + 2 )
         local p = {}
 
         -- in normal gameplay (non-CourseMode), we hide the solid color but leave the white line.
