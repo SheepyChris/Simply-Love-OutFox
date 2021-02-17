@@ -5,7 +5,7 @@ local pn = ToEnumShortString(player)
 local height = 105
 
 local LifeBaseSampleRate = 0.25
-local LifeLineThickness = 2
+local LifeLineThickness = 1
 local LifeMeter = nil
 local life_verts = {}
 local offset = 0
@@ -191,8 +191,9 @@ local graph_and_lifeline = Def.ActorFrame{
 	Def.ActorMultiVertex{
 		Name="LifeLine_AMV",
 		InitCommand=function(self)
-			self:SetDrawState({Mode="DrawMode_LineStrip"})
-				:SetLineWidth( LifeLineThickness )
+			local ZoomScale = LifeLineThickness * (( DISPLAY:GetDisplayHeight() / SCREEN_HEIGHT ))
+			self:SetDrawState({Mode="DrawMode_LineStripM"})
+				:SetLineWidth( ZoomScale )
 				:align(0, 0)
 		end,
 		UpdateCommand=function(self)

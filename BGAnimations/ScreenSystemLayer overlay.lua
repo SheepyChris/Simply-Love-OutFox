@@ -74,11 +74,13 @@ for player in ivalues(PlayerNumber) do
 				self:xy(x, _screen.h):setsize(dim,dim)
 			end
 
-			local screen = SCREENMAN:GetTopScreen()
-			if THEME:HasMetric(screen:GetName(), "ShowPlayerAvatar") then
-				self:visible( THEME:GetMetric(screen:GetName(), "ShowPlayerAvatar") )
-			else
-				self:visible( THEME:GetMetric(screen:GetName(), "ShowCreditDisplay") )
+			if SCREENMAN:GetTopScreen() then
+				local screen = SCREENMAN:GetTopScreen()
+				if THEME:HasMetric(screen:GetName(), "ShowPlayerAvatar") then
+					self:visible( THEME:GetMetric(screen:GetName(), "ShowPlayerAvatar") )
+				else
+					self:visible( THEME:GetMetric(screen:GetName(), "ShowCreditDisplay") )
+				end
 			end
 		end,
 	}
