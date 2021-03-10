@@ -18,7 +18,7 @@ https://www.youtube.com/watch?v=OtcWy5m6-CQ
 This Simply Love fork seeks to perform additional tweaks for compatibility and integrations with StepMania 5.3. It may be also compatible with previous releases from the official StepMania project, but that's not a priority.
 
 **Compatible Releases**<br>
-✅ [Project OutFox 5.3 Alpha 4.9.0 or newer](https://projectmoon.dance/downloads)<br>
+✅ [Project OutFox Alpha 4.9.0 or newer](https://projectmoon.dance/downloads)<br>
 ⚠️ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) (untested)<br>
 ⚠️ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12) (untested)<br>
 
